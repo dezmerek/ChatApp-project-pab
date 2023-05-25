@@ -7,7 +7,7 @@ const ChatListScreen = props => {
     return <View style={styles.container}>
         <Text>Lista czatów</Text>
 
-        <Button title='Ustawienia' onPress={() => props.navigation.navigate('Ustawienia')}></Button>
+        <Button title='Ustawienia' onPress={() => props.navigation.navigate('ChatSettings')}></Button>
     </View>
 };
 
