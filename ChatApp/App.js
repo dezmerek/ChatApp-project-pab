@@ -8,6 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import ChatListScreen from './screens/ChatListScreen';
+import ChatSettingsScreen from './screens/ChatSettingsScreen';
 
 SplashScreen.preventAutoHideAsync();
 const Stack = createStackNavigator();
@@ -65,6 +66,7 @@ export default function App() {
 
         <Stack.Navigator>
           <Stack.Screen name="Home" component={ChatListScreen} />
+          <Stack.Screen name="Ustawienia" component={ChatSettingsScreen} />
         </Stack.Navigator>
 
       </NavigationContainer>
