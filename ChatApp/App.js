@@ -60,17 +60,15 @@ export default function App() {
     <SafeAreaProvider
       style={styles.container}
       onLayout={onLayout}>
-      <SafeAreaView>
 
-        <NavigationContainer>
+      <NavigationContainer>
 
-          <Stack.Navigator>
-            <Stack.Screen name="Home" component={ChatListScreen} />
-          </Stack.Navigator>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={ChatListScreen} />
+        </Stack.Navigator>
 
-        </NavigationContainer>
+      </NavigationContainer>
 
-      </SafeAreaView>
     </SafeAreaProvider>
   );
 }
@@ -79,8 +77,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    justifyContent: 'center',
-    alignItems: 'center'
   },
   label: {
     color: 'black',
