@@ -6,12 +6,24 @@ import { useCallback, useEffect, useState } from "react";
 import * as Font from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'; //https://reactnavigation.org/docs/bottom-tab-navigator/
 
 import ChatListScreen from './screens/ChatListScreen';
 import ChatSettingsScreen from './screens/ChatSettingsScreen';
+import SettingsScreen from './screens/SettingsScreen';
 
 SplashScreen.preventAutoHideAsync();
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const TabNavigator = () => {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Czat" component={ChatListScreen} />
+      <Tab.Screen name="Ustawienia" component={SettingsScreen} />
+    </Tab.Navigator>
+  )
+}
 
 export default function App() {
 
@@ -65,7 +77,7 @@ export default function App() {
       <NavigationContainer>
 
         <Stack.Navigator>
-          <Stack.Screen name="Home" component={ChatListScreen} />
+          <Stack.Screen name="Home" component={TabNavigator} />
           <Stack.Screen name="ChatSettings" component={ChatSettingsScreen} options={{
             headerTitle: "Ustawienia",
             headerBackTitle: "Wróć"
