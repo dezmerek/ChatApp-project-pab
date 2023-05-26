@@ -35,7 +35,10 @@ const AuthScreen = props => {
                 icon="lock"
                 iconPack={Feather}
             />
-            <SubmitButton />
+            <SubmitButton
+                title="Zarejestruj się"
+                onPress={() => console.log("Button pressed")}
+                style={{ marginTop: 20 }} />
         </PageContainer>
     </SafeAreaView>
 };
