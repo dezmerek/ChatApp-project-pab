@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import PageContainer from '../components/PageContainer';
 
+
 const AuthScreen = props => {
 
     return <SafeAreaView style={{flex: 1}}>
