@@ -20,6 +20,7 @@ const Input = props => {
                     style={styles.icon} />
             }
             <TextInput
+                {...props}
                 style={styles.input}
                 onChangeText={onChangeText} />
         </View>
