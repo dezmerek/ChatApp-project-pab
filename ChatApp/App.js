@@ -4,34 +4,9 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect, useState } from "react";
 import * as Font from 'expo-font';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'; //https://reactnavigation.org/docs/bottom-tab-navigator/
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { Feather } from '@expo/vector-icons';
-
-import ChatListScreen from './screens/ChatListScreen';
-import ChatSettingsScreen from './screens/ChatSettingsScreen';
-import SettingsScreen from './screens/SettingsScreen';
+import AppNavigator from './navigation/AppNavigator';
 
 SplashScreen.preventAutoHideAsync();
-const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
-
-const TabNavigator = () => {
-  return (
-    <Tab.Navigator
-      screenOptions={{ headerTitle: '' }}>
-      <Tab.Screen name="ChatList" component={ChatListScreen} options={{
-        tabBarLabel: 'Czat',
-        tabBarIcon: ({ color, size }) => (<Ionicons name="chatbubble-outline" size={size} color={color} />)
-      }} />
-      <Tab.Screen name="Settings" component={SettingsScreen} options={{
-        tabBarIcon: ({ color, size }) => (<Feather name="settings" size={size} color={color} />)
-      }} />
-    </Tab.Navigator>
-  )
-}
 
 export default function App() {
 
@@ -81,19 +56,7 @@ export default function App() {
     <SafeAreaProvider
       style={styles.container}
       onLayout={onLayout}>
-
-      <NavigationContainer>
-
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={TabNavigator} options={{ headerShown: false }} />
-          <Stack.Screen name="ChatSettings" component={ChatSettingsScreen} options={{
-            headerTitle: "Ustawienia",
-            headerBackTitle: "Wróć"
-          }} />
-        </Stack.Navigator>
-
-      </NavigationContainer>
-
+      <AppNavigator />
     </SafeAreaProvider>
   );
 }
