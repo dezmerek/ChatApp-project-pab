@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 
@@ -16,25 +16,34 @@ const AuthScreen = props => {
 
     return <SafeAreaView style={{ flex: 1 }}>
         <PageContainer>
+            <ScrollView>
 
-            <View style={styles.imageContainer}>
-                <Image
-                    style={styles.image}
-                    source={logo}
-                    resizeMode='contain' />
-            </View>
+                <KeyboardAvoidingView
+                    style={styles.keyboardAvoidingView}
+                    behavior={Platform.OS === "ios" ? "height" : undefined}
+                    keyboardVerticalOffset={100}>
 
-            {
-                isSignUp ?
-                    <SignUpForm /> :
-                    <SignInForm />
-            }
+                    <View style={styles.imageContainer}>
+                        <Image
+                            style={styles.image}
+                            source={logo}
+                            resizeMode='contain' />
+                    </View>
 
-            <TouchableOpacity
-                onPress={() => setIsSignUp(prevState => !prevState)}
-                style={styles.linkContainer}>
-                <Text style={styles.link}>{`Przejdź do ${isSignUp ? "logowania" : "tworzenia konta"}`}</Text>
-            </TouchableOpacity>
+                    {
+                        isSignUp ?
+                            <SignUpForm /> :
+                            <SignInForm />
+                    }
+
+                    <TouchableOpacity
+                        onPress={() => setIsSignUp(prevState => !prevState)}
+                        style={styles.linkContainer}>
+                        <Text style={styles.link}>{`Przejdź do ${isSignUp ? "logowania" : "tworzenia konta"}`}</Text>
+                    </TouchableOpacity>
+                </KeyboardAvoidingView>
+
+            </ScrollView>
         </PageContainer>
     </SafeAreaView>
 };
@@ -56,6 +65,10 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '50%'
+    },
+    keyboardAvoidingView: {
+        flex: 1,
+        justifyContent: 'center'
     }
 })
 
