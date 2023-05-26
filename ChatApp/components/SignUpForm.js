@@ -2,12 +2,20 @@ import React from 'react';
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
 import { Feather, FontAwesome } from '@expo/vector-icons';
+import { validate } from 'validate.js';
 
 const SignUpForm = props => {
 
     const inputChangedHandler = (inputId, inputValue) => {
-        console.log("InputId: " + inputId)
-        console.log("InputValue: " + inputValue)
+        if (inputId === "firstName" || inputId === "lastName") {
+            console.log(validate({ "firstName": inputValue }, { "firstName": { presence: { allowEmpty: false } } }))
+        }
+        else if (inputId === "email") {
+
+        }
+        else if (inputId === "password") {
+
+        }
     }
 
     return (
