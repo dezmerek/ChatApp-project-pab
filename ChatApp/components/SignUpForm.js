@@ -5,8 +5,15 @@ import { Feather, FontAwesome } from '@expo/vector-icons';
 
 import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducer';
+import { signUp } from '../utils/actions/authActions';
 
 const initialState = {
+    inputValues: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+    },
     inputValidities: {
         firstName: false,
         lastName: false,
@@ -22,8 +29,17 @@ const SignUpForm = props => {
 
     const inputChangedHandler = useCallback((inputId, inputValue) => {
         const result = validateInput(inputId, inputValue);
-        dispatchFormState({ inputId, validationResult: result })
+        dispatchFormState({ inputId, validationResult: result, inputValue })
     }, [dispatchFormState]);
+
+    const authHandler = () => {
+        signUp(
+            formState.inputValues.firstName,
+            formState.inputValues.lastName,
+            formState.inputValues.email,
+            formState.inputValues.password,
+        );
+    }
 
     return (
         <>
@@ -68,7 +84,7 @@ const SignUpForm = props => {
 
             <SubmitButton
                 title="Utwórz konto"
-                onPress={() => console.log("Button pressed")}
+                onPress={authHandler}
                 style={{ marginTop: 20 }}
                 disabled={!formState.formIsValid} />
         </>
