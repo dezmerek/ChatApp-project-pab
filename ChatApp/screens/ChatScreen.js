@@ -1,17 +1,24 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, Button, ImageBackground, TextInput, SafeAreaView } from 'react-native';
 
 import backgroundImage from '../assets/images/droplet.png';
 
 const ChatScreen = props => {
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView
+            edges={['right', 'left', 'bottom']}
+            style={styles.container}>
             <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
 
-
             </ImageBackground>
-        </View>
+
+            <View style={styles.inputContainer}>
+                <Button title='Obraz' />
+                <TextInput />
+                <Button title='Aparat' />
+            </View>
+        </SafeAreaView >
     )
 };
 
@@ -21,7 +28,10 @@ const styles = StyleSheet.create({
         flexDirection: 'column'
     },
     backgroundImage: {
-        flex: 1
+        flex: 1,
+    },
+    inputContainer: {
+        flexDirection: 'row',
     }
 })
 
