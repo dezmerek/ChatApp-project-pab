@@ -6,9 +6,6 @@ import { Feather, FontAwesome } from '@expo/vector-icons';
 import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducer';
 import { signUp } from '../utils/actions/authActions';
-import { getFirebaseApp } from '../utils/firebaseHelper';
-
-console.log(getFirebaseApp());
 
 const initialState = {
     inputValues: {
