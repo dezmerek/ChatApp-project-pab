@@ -16,7 +16,6 @@ const Tab = createBottomTabNavigator();
 const AppNavigator = (props) => {
 
     const isAuth = false;
-
     return (
         <NavigationContainer>
             {isAuth && <MainNavigator />}
