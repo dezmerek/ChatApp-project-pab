@@ -30,29 +30,11 @@ const AuthScreen = props => {
                     <SignInForm />
             }
 
-<<<<<<< HEAD
-                    {
-                        isSignUp ?
-                            <SignUpForm /> :
-                            <SignInForm />
-                    }
-
-                    <TouchableOpacity
-                        onPress={() => setIsSignUp(prevState => !prevState)}
-                        style={styles.linkContainer}>
-                        <Text style={styles.link}>{`Przejdź do ${isSignUp ? "logowania" : "tworzenia konta"}`}</Text>
-                    </TouchableOpacity>
-
-                </KeyboardAvoidingView>
-
-            </ScrollView>
-=======
             <TouchableOpacity
                 onPress={() => setIsSignUp(prevState => !prevState)}
                 style={styles.linkContainer}>
                 <Text style={styles.link}>{`Przejdź do ${isSignUp ? "logowania" : "tworzenia konta"}`}</Text>
             </TouchableOpacity>
->>>>>>> main
         </PageContainer>
     </SafeAreaView>
 };
