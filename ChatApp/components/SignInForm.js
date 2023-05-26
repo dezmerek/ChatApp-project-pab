@@ -12,15 +12,19 @@ const initialState = {
         password: false,
     },
     formIsValid: false
-}
+};
+
+/*const errorMessages = {
+    email: 'Nieprawidłowy format adresu email',
+    password: 'Nieprawidłowe hasło'
+};*/
 
 const SignInForm = props => {
-
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
 
     const inputChangedHandler = useCallback((inputId, inputValue) => {
         const result = validateInput(inputId, inputValue);
-        dispatchFormState({ inputId, validationResult: result })
+        dispatchFormState({ inputId, validationResult: result });
     }, [dispatchFormState]);
 
     return (
@@ -33,7 +37,7 @@ const SignInForm = props => {
                 autoCapitalize="none"
                 keyboardType="email-address"
                 onInputChanged={inputChangedHandler}
-                errorText={formState.inputValidities["email"]} />
+                errorText={formState.inputValidities["email"] /*? errorMessages.email : ''*/} />
 
             <Input
                 id="password"
@@ -43,7 +47,7 @@ const SignInForm = props => {
                 autoCapitalize="none"
                 secureTextEntry
                 onInputChanged={inputChangedHandler}
-                errorText={formState.inputValidities["password"]} />
+                errorText={formState.inputValidities["password"] /*? errorMessages.password : ''*/} />
 
             <SubmitButton
                 title="Zaloguj się"
@@ -51,7 +55,7 @@ const SignInForm = props => {
                 style={{ marginTop: 20 }}
                 disabled={!formState.formIsValid} />
         </>
-    )
+    );
 };
 
 export default SignInForm;
