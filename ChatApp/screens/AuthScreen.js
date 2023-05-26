@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {FontAwesome} from '@expo/vector-icons'
+import {Feather, FontAwesome} from '@expo/vector-icons'
 
 import PageContainer from '../components/PageContainer';
 import Input from '../components/Input';
@@ -15,7 +15,22 @@ const AuthScreen = props => {
             label="Imię" 
             icon="user-o" 
             iconPack={FontAwesome}
-            iconSize={20}/>
+            />
+            <Input 
+            label="Nazwisko" 
+            icon="user-o" 
+            iconPack={FontAwesome}
+            />
+            <Input 
+            label="E-mail" 
+            icon="mail" 
+            iconPack={Feather}
+            />
+            <Input 
+            label="Hasło" 
+            icon="lock" 
+            iconPack={Feather}
+            />
         </PageContainer>
     </SafeAreaView>
 };
