@@ -1,47 +1,51 @@
-import { View, StyleSheet, Text, TextInput } from "react-native"
+import { StyleSheet, Text, TextInput, View } from "react-native"
 import { FontAwesome } from '@expo/vector-icons';
+
 import colors from "../constants/colors";
 
-const Input = props =>{
+const Input = props => {
+
+    const onChangeText = text => {
+        props.onInputChanged(props.id, text);
+    }
+
     return <View style={styles.container}>
         <Text style={styles.label}>{props.label}</Text>
 
         <View style={styles.inputContainer}>
-        { 
-            props.icon && <props.iconPack 
-                name= {props.icon} 
-                size={props.iconSize || 15} 
-                style={styles.icon} />
-        }
+            {
+                props.icon && <props.iconPack
+                    name={props.icon}
+                    size={props.iconSize || 15}
+                    style={styles.icon} />
+            }
             <TextInput
-                style={styles.input}/>
+                style={styles.input}
+                onChangeText={onChangeText} />
         </View>
 
-        {   
-        props.errorText &&
+        {
+            props.errorText &&
             <View style={styles.errorContainer}>
                 <Text style={styles.errorText}>{props.errorText}</Text>
             </View>
         }
 
     </View>
-}
-
+};
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         width: '100%'
     },
-
-    label:{
+    label: {
         marginVertical: 8,
-        fontFamily:'bold',
+        fontFamily: 'bold',
         letterSpacing: 0.3,
-        color:colors.textColor
+        color: colors.textColor
     },
-
-    inputContainer:{
-        width:'100%',
+    inputContainer: {
+        width: '100%',
         backgroundColor: 'red',
         paddingHorizontal: 10,
         paddingVertical: 15,
@@ -50,30 +54,26 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
-
-    icon:{
+    icon: {
         marginRight: 10,
         color: colors.grey
     },
-
-    input:{
+    input: {
         color: colors.textColor,
-        flex:1,
+        flex: 1,
         fontFamily: 'regular',
         letterSpacing: 0.3,
         paddingTop: 0
     },
-
-    errorContainer:{
-        marginVertical: 5,
+    errorContainer: {
+        marginVertical: 5
     },
-
-    errorText:{
-        corlor:'red',
+    errorText: {
+        color: 'red',
         fontSize: 13,
         fontFamily: 'regular',
-        letterSpacing: 0.3,
+        letterSpacing: 0.3
     }
 })
 
-export default Input; 
+export default Input;
