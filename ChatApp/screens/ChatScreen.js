@@ -1,18 +1,27 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, ImageBackground } from 'react-native';
+
+import backgroundImage from '../assets/images/droplet.png';
 
 const ChatScreen = props => {
 
-    return <View style={styles.container}>
-        <Text>Ekran czatu</Text>
-    </View>
+    return (
+        <View style={styles.container}>
+            <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
+
+
+            </ImageBackground>
+        </View>
+    )
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        flexDirection: 'column'
+    },
+    backgroundImage: {
+        flex: 1
     }
 })
 
