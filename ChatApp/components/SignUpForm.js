@@ -6,10 +6,25 @@ import { Feather, FontAwesome } from '@expo/vector-icons';
 import { validateInput } from '../utils/actions/formActions';
 
 const reducer = (state, action) => {
-    const { validationResult } = action;
+    const { validationResult, inputId } = action
+
+    const updatedValidities = {
+        ...state.inputValidities,
+        [inputId]: validationResult
+    };
+
+    let updatedFormIsValid = true;
+
+    for (const key in updatedValidities) {
+        if (updatedValidities[key] !== undefined) {
+            updatedFormIsValid = false;
+            break;
+        }
+    }
+
     return {
-        ...state,
-        formIsValid: validationResult === undefined
+        inputValidities: updatedValidities,
+        formIsValid: updatedFormIsValid
     };
 }
 
@@ -29,7 +44,7 @@ const SignUpForm = props => {
 
     const inputChangedHandler = (inputId, inputValue) => {
         const result = validateInput(inputId, inputValue);
-        dispatchFormState({ validationResult: result })
+        dispatchFormState({ inputId, validationResult: result })
     }
 
     return (
