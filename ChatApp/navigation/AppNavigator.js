@@ -8,14 +8,19 @@ import ChatSettingsScreen from '../screens/ChatSettingsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import ChatListScreen from "../screens/ChatListScreen";
 import MainNavigator from "./MainNavigator";
+import AuthScreen from "../screens/AuthScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = (props) => {
+
+    const isAuth = false;
+
     return (
         <NavigationContainer>
-            <MainNavigator />
+            {isAuth && <MainNavigator />}
+            {!isAuth && <AuthScreen/>}
         </NavigationContainer>
     );
 };
