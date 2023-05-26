@@ -1,50 +1,45 @@
-import React from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Feather, FontAwesome } from '@expo/vector-icons'
+
 
 import PageContainer from '../components/PageContainer';
-import Input from '../components/Input';
-import SubmitButton from '../components/SubmitButton';
-
+import SignInForm from '../components/SignInForm';
+import SignUpForm from '../components/SignUpForm';
+import colors from '../constants/colors';
 
 const AuthScreen = props => {
 
+    const [isSignUp, setIsSignUp] = useState(false);
+
     return <SafeAreaView style={{ flex: 1 }}>
         <PageContainer>
-            <Input
-                label="Imię"
-                icon="user-o"
-                iconPack={FontAwesome}
-            />
+            {
+                isSignUp ?
+                    <SignUpForm /> :
+                    <SignInForm />
+            }
 
-            <Input
-                label="Nazwisko"
-                icon="user-o"
-                iconPack={FontAwesome}
-            />
-
-            <Input
-                label="E-mail"
-                icon="mail"
-                iconPack={Feather}
-            />
-
-            <Input
-                label="Hasło"
-                icon="lock"
-                iconPack={Feather}
-            />
-            <SubmitButton
-                title="Zarejestruj się"
-                onPress={() => console.log("Button pressed")}
-                style={{ marginTop: 20 }} />
+            <TouchableOpacity
+                onPress={() => setIsSignUp(prevState => !prevState)}
+                style={styles.linkContainer}>
+                <Text style={styles.link}>{`Przejdź do ${isSignUp ? "logowania" : "tworzenia konta"}`}</Text>
+            </TouchableOpacity>
         </PageContainer>
     </SafeAreaView>
 };
 
 const styles = StyleSheet.create({
-
+    linkContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 15
+    },
+    link: {
+        color: colors.blue,
+        fontFamily: 'medium',
+        letterSpacing: 0.3
+    }
 })
 
 export default AuthScreen;
