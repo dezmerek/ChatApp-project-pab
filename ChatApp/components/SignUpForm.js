@@ -33,7 +33,8 @@ const SignUpForm = props => {
                 icon="user-o"
                 iconPack={FontAwesome}
                 onInputChanged={inputChangedHandler}
-                autoCapitalize="none" />
+                autoCapitalize="none"
+                errorText={formState.inputValidities["firstName"]} />
 
             <Input
                 id="lastName"
@@ -41,7 +42,8 @@ const SignUpForm = props => {
                 icon="user-o"
                 iconPack={FontAwesome}
                 onInputChanged={inputChangedHandler}
-                autoCapitalize="none" />
+                autoCapitalize="none"
+                errorText={formState.inputValidities["lastName"]} />
 
             <Input
                 id="email"
@@ -51,6 +53,7 @@ const SignUpForm = props => {
                 onInputChanged={inputChangedHandler}
                 keyboardType="email-address"
                 autoCapitalize="none"
+                errorText={formState.inputValidities["email"]}
             />
 
             <Input
@@ -60,7 +63,8 @@ const SignUpForm = props => {
                 autoCapitalize="none"
                 secureTextEntry
                 iconPack={Feather}
-                onInputChanged={inputChangedHandler} />
+                onInputChanged={inputChangedHandler}
+                errorText={formState.inputValidities["password"]} />
 
             <SubmitButton
                 title="Utwórz konto"

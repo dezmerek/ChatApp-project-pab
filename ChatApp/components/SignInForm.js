@@ -32,7 +32,8 @@ const SignInForm = props => {
                 iconPack={Feather}
                 autoCapitalize="none"
                 keyboardType="email-address"
-                onInputChanged={inputChangedHandler} />
+                onInputChanged={inputChangedHandler}
+                errorText={formState.inputValidities["email"]} />
 
             <Input
                 id="password"
@@ -41,7 +42,8 @@ const SignInForm = props => {
                 iconPack={Feather}
                 autoCapitalize="none"
                 secureTextEntry
-                onInputChanged={inputChangedHandler} />
+                onInputChanged={inputChangedHandler}
+                errorText={formState.inputValidities["password"]} />
 
             <SubmitButton
                 title="Zaloguj się"
