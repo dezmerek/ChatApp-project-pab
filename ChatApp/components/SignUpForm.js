@@ -8,7 +8,20 @@ const SignUpForm = props => {
 
     const inputChangedHandler = (inputId, inputValue) => {
         if (inputId === "firstName" || inputId === "lastName") {
-            console.log(validate({ "firstName": inputValue }, { "firstName": { presence: { allowEmpty: false } } }))
+
+            const constraints = {
+                presence: { allowEmpty: false }
+            };
+
+            if (inputValue !== "") {
+                constraints.format = {
+                    pattern: "[a-z]+",
+                    flags: "i",
+                    message: "value can only contain letters"
+                }
+            }
+
+            console.log(validate({ [inputId]: inputValue }, { [inputId]: constraints }))
         }
         else if (inputId === "email") {
 
