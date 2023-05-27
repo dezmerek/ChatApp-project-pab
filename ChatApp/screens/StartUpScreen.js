@@ -1,23 +1,31 @@
-import React from "react";
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useEffect } from 'react';
+import { ActivityIndicator, View } from 'react-native';
+import colors from '../constants/colors';
+import commonStyles from '../constants/commonStyles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from 'react-redux';
+import { setDidTryAutoLogin } from '../store/authSlice';
 
-import MainNavigator from "./MainNavigator";
-import AuthScreen from "../screens/AuthScreen";
-import { useSelector } from "react-redux";
-import StartUpScreen from "../screens/StartUpScreen";
+const StartUpScreen = () => {
 
-const AppNavigator = (props) => {
+    const dispatch = useDispatch();
 
-    const isAuth = useSelector(state => state.auth.token !== null && state.auth.token !== "");
-    const didTryAutoLogin = useSelector(state => state.auth.didTryAutoLogin);
+    useEffect(() => {
+        const tryLogin = async () => {
+            const storedAuthInfo = await AsyncStorage.getItem("userData");
 
-    return (
-        <NavigationContainer>
-            {isAuth && <MainNavigator />}
-            {!isAuth && didTryAutoLogin && <AuthScreen />}
-            {!isAuth && !didTryAutoLogin && <StartUpScreen />}
-        </NavigationContainer>
-    );
-};
+            if (!storedAuthInfo) {
+                dispatch(setDidTryAutoLogin());
+                return;
+            }
+        };
 
-export default AppNavigator;
+        tryLogin();
+    }, []);
+
+    return <View style={commonStyles.center}>
+        <ActivityIndicator size="large" color={colors.primary} />
+    </View>
+}
+
+export default StartUpScreen;
