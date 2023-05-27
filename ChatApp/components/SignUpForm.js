@@ -8,6 +8,7 @@ import { reducer } from '../utils/reducers/formReducer';
 import { signUp } from '../utils/actions/authActions';
 import { ActivityIndicator, Alert } from 'react-native';
 import colors from '../constants/colors';
+import { useDispatch } from 'react-redux';
 
 const initialState = {
     inputValues: {
@@ -27,6 +28,8 @@ const initialState = {
 
 const SignUpForm = props => {
 
+    const dispatch = useDispatch();
+
     const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(false);
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
@@ -38,19 +41,21 @@ const SignUpForm = props => {
 
     useEffect(() => {
         if (error) {
-            Alert.alert("Wystąpił błąd", error, [{ text: "Ok" }]);
+            Alert.alert("An error occured", error, [{ text: "Okay" }]);
         }
     }, [error])
 
     const authHandler = async () => {
         try {
             setIsLoading(true);
-            await signUp(
+
+            const action = signUp(
                 formState.inputValues.firstName,
                 formState.inputValues.lastName,
                 formState.inputValues.email,
                 formState.inputValues.password,
             );
+            dispatch(action);
             setError(null);
         } catch (error) {
             setError(error.message);
@@ -86,8 +91,7 @@ const SignUpForm = props => {
                 onInputChanged={inputChangedHandler}
                 keyboardType="email-address"
                 autoCapitalize="none"
-                errorText={formState.inputValidities["email"]}
-            />
+                errorText={formState.inputValidities["email"]} />
 
             <Input
                 id="password"
@@ -103,7 +107,7 @@ const SignUpForm = props => {
                 isLoading ?
                     <ActivityIndicator size={'small'} color={colors.primary} style={{ marginTop: 10 }} /> :
                     <SubmitButton
-                        title="Utwórz konto"
+                        title="Sign up"
                         onPress={authHandler}
                         style={{ marginTop: 20 }}
                         disabled={!formState.formIsValid} />

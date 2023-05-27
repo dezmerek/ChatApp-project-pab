@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authSilence from "./authSilence";
+import authSlice from "./authSlice";
 
 export const store = configureStore({
     reducer: {
-        auth: authSilence
+        auth: authSlice
     }
-})
+});
