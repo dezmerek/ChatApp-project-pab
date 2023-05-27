@@ -1,5 +1,27 @@
 import { validate } from "validate.js";
 
+export const validateLength = (id, value, minLength, maxLength, allowEmpty) => {
+    const constraints = {
+        presence: { allowEmpty }
+    };
+
+    if (!allowEmpty || value !== "") {
+        constraints.length = {}
+
+        if (minLength != null) {
+            constraints.length.minimum = minLength;
+        }
+
+        if (maxLength != null) {
+            constraints.length.maximum = maxLength;
+        }
+    }
+
+    const validationResult = validate({ [id]: value }, { [id]: constraints });
+
+    return validationResult && validationResult[id];
+}
+
 export const validateString = (id, value) => {
     const constraints = {
         presence: { allowEmpty: false }
@@ -9,7 +31,7 @@ export const validateString = (id, value) => {
         constraints.format = {
             pattern: "[a-z]+",
             flags: "i",
-            message: "value can only contain letters"
+            message: "może zawierać tylko litery"
         }
     }
 
@@ -18,7 +40,6 @@ export const validateString = (id, value) => {
     return validationResult && validationResult[id];
 }
 
-//https://validatejs.org/#validators-email
 export const validateEmail = (id, value) => {
     const constraints = {
         presence: { allowEmpty: false }
@@ -41,7 +62,7 @@ export const validatePassword = (id, value) => {
     if (value !== "") {
         constraints.length = {
             minimum: 6,
-            message: "must be at least 6 characters"
+            message: "musi mieć co najmniej 6 znaków"
         }
     }
 
