@@ -29,8 +29,6 @@ const initialState = {
 const SignUpForm = props => {
 
     const dispatch = useDispatch();
-    const userData = useSelector(state => state.auth);
-    console.log(stateData);
 
     const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(false);
