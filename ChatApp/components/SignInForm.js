@@ -48,7 +48,7 @@ const SignInForm = props => {
                 formState.inputValues.email,
                 formState.inputValues.password,
             );
-            dispatch(action);
+            await dispatch(action);
             setError(null);
         } catch (error) {
             setError(error.message);
