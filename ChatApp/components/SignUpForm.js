@@ -107,7 +107,7 @@ const SignUpForm = props => {
                 isLoading ?
                     <ActivityIndicator size={'small'} color={colors.primary} style={{ marginTop: 10 }} /> :
                     <SubmitButton
-                        title="Utwórz konto"
+                        title="Stwórz konto"
                         onPress={authHandler}
                         style={{ marginTop: 20 }}
                         disabled={!formState.formIsValid} />
