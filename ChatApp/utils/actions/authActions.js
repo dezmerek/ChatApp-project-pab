@@ -25,10 +25,10 @@ export const signUp = (firstName, lastName, email, password) => {
             console.log(error);
             const errorCode = error.code;
 
-            let message = "Something went wrong.";
+            let message = "Coś poszło nie tak.";
 
             if (errorCode === "auth/email-already-in-use") {
-                message = "This email is already in use";
+                message = "Ten email jest już w użyciu";
             }
 
             throw new Error(message);
