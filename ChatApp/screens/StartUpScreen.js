@@ -4,7 +4,8 @@ import colors from '../constants/colors';
 import commonStyles from '../constants/commonStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
-import { setDidTryAutoLogin } from '../store/authSlice';
+import { authenticate, setDidTryAutoLogin } from '../store/authSlice';
+import { getUserData } from '../utils/actions/userActions';
 
 const StartUpScreen = () => {
 
@@ -28,6 +29,8 @@ const StartUpScreen = () => {
                 return;
             }
 
+            const userData = await getUserData(userId);
+            dispatch(authenticate({ token: token, userData }));
         };
 
         tryLogin();
