@@ -7,6 +7,7 @@ import PageContainer from '../components/PageContainer';
 import PageTitle from '../components/PageTitle';
 import SubmitButton from '../components/SubmitButton';
 import colors from '../constants/colors';
+import { updateLoggedInUserData } from '../store/authSlice';
 import { updateSignedInUserData, userLogout } from '../utils/actions/authActions';
 import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducer';
@@ -16,7 +17,9 @@ const SettingsScreen = props => {
     const dispatch = useDispatch();
 
     const [isLoading, setIsLoading] = useState(false);
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const userData = useSelector(state => state.auth.userData);
+    console.log(userData);
 
     const initialState = {
         inputValues: {
@@ -47,7 +50,13 @@ const SettingsScreen = props => {
         try {
             setIsLoading(true);
             await updateSignedInUserData(userData.userId, updatedValues);
+            dispatch(updateLoggedInUserData({ newData: updatedValues }));
 
+            setShowSuccessMessage(true);
+
+            setTimeout(() => {
+                setShowSuccessMessage(false)
+            }, 3000);
         } catch (error) {
             console.log(error);
         }
@@ -100,15 +109,22 @@ const SettingsScreen = props => {
             errorText={formState.inputValidities["about"]}
             initialValue={userData.about} />
 
-        {
-            isLoading ?
-                <ActivityIndicator size={'small'} color={colors.primary} style={{ marginTop: 10 }} /> :
-                <SubmitButton
-                    title="Zapisz"
-                    onPress={saveHandler}
-                    style={{ marginTop: 20 }}
-                    disabled={!formState.formIsValid} />
-        }
+        <View style={{ marginTop: 20 }}>
+            {
+                showSuccessMessage && <Text>Zapisano zmiany!</Text>
+            }
+
+            {
+                isLoading ?
+                    <ActivityIndicator size={'small'} color={colors.primary} style={{ marginTop: 10 }} /> :
+                    <SubmitButton
+                        title="Zapisz"
+                        onPress={saveHandler}
+                        style={{ marginTop: 20 }}
+                        disabled={!formState.formIsValid} />
+            }
+        </View>
+
 
         <SubmitButton
             title="Wyloguj się"
