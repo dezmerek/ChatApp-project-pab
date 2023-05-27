@@ -34,7 +34,7 @@ const StartUpScreen = () => {
         };
 
         tryLogin();
-    }, []);
+    }, [dispatch]);
 
     return <View style={commonStyles.center}>
         <ActivityIndicator size="large" color={colors.primary} />
