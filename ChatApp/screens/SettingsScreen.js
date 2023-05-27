@@ -11,6 +11,8 @@ import { updateLoggedInUserData } from '../store/authSlice';
 import { updateSignedInUserData, userLogout } from '../utils/actions/authActions';
 import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducer';
+import ProfileImage from '../components/ProfileImage';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const SettingsScreen = props => {
 
@@ -81,69 +83,75 @@ const SettingsScreen = props => {
     return <PageContainer>
         <PageTitle text="Ustawienia" />
 
-        <Input
-            id="firstName"
-            label="Imie"
-            icon="user-o"
-            iconPack={FontAwesome}
-            onInputChanged={inputChangedHandler}
-            autoCapitalize="none"
-            errorText={formState.inputValidities["firstName"]}
-            initialValue={userData.firstName} />
+        <ScrollView>
 
-        <Input
-            id="lastName"
-            label="Nazwisko"
-            icon="user-o"
-            iconPack={FontAwesome}
-            onInputChanged={inputChangedHandler}
-            autoCapitalize="none"
-            errorText={formState.inputValidities["lastName"]}
-            initialValue={userData.lastName} />
+            <ProfileImage />
 
-        <Input
-            id="email"
-            label="Email"
-            icon="mail"
-            iconPack={Feather}
-            onInputChanged={inputChangedHandler}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            errorText={formState.inputValidities["email"]}
-            initialValue={userData.email} />
+            <Input
+                id="firstName"
+                label="Imie"
+                icon="user-o"
+                iconPack={FontAwesome}
+                onInputChanged={inputChangedHandler}
+                autoCapitalize="none"
+                errorText={formState.inputValidities["firstName"]}
+                initialValue={userData.firstName} />
 
-        <Input
-            id="about"
-            label="O mnie"
-            icon="user-o"
-            iconPack={FontAwesome}
-            onInputChanged={inputChangedHandler}
-            autoCapitalize="none"
-            errorText={formState.inputValidities["about"]}
-            initialValue={userData.about} />
+            <Input
+                id="lastName"
+                label="Nazwisko"
+                icon="user-o"
+                iconPack={FontAwesome}
+                onInputChanged={inputChangedHandler}
+                autoCapitalize="none"
+                errorText={formState.inputValidities["lastName"]}
+                initialValue={userData.lastName} />
 
-        <View style={{ marginTop: 20 }}>
-            {
-                showSuccessMessage && <Text>Zapisano zmiany!</Text>
-            }
+            <Input
+                id="email"
+                label="Email"
+                icon="mail"
+                iconPack={Feather}
+                onInputChanged={inputChangedHandler}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                errorText={formState.inputValidities["email"]}
+                initialValue={userData.email} />
 
-            {
-                isLoading ?
-                    <ActivityIndicator size={'small'} color={colors.primary} style={{ marginTop: 10 }} /> :
-                    hasChanges() && <SubmitButton
-                        title="Zapisz"
-                        onPress={saveHandler}
-                        style={{ marginTop: 20 }}
-                        disabled={!formState.formIsValid} />
-            }
-        </View>
+            <Input
+                id="about"
+                label="O mnie"
+                icon="user-o"
+                iconPack={FontAwesome}
+                onInputChanged={inputChangedHandler}
+                autoCapitalize="none"
+                errorText={formState.inputValidities["about"]}
+                initialValue={userData.about} />
+
+            <View style={{ marginTop: 20 }}>
+                {
+                    showSuccessMessage && <Text>Zapisano zmiany!</Text>
+                }
+
+                {
+                    isLoading ?
+                        <ActivityIndicator size={'small'} color={colors.primary} style={{ marginTop: 10 }} /> :
+                        hasChanges() && <SubmitButton
+                            title="Zapisz"
+                            onPress={saveHandler}
+                            style={{ marginTop: 20 }}
+                            disabled={!formState.formIsValid} />
+                }
+            </View>
 
 
-        <SubmitButton
-            title="Wyloguj się"
-            onPress={() => dispatch(userLogout())}
-            style={{ marginTop: 20 }}
-            color={colors.red} />
+            <SubmitButton
+                title="Wyloguj się"
+                onPress={() => dispatch(userLogout())}
+                style={{ marginTop: 20 }}
+                color={colors.red} />
+
+        </ScrollView>
     </PageContainer>
 };
 
