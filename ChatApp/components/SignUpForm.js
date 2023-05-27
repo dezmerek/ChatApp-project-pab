@@ -8,7 +8,7 @@ import { reducer } from '../utils/reducers/formReducer';
 import { signUp } from '../utils/actions/authActions';
 import { ActivityIndicator, Alert } from 'react-native';
 import colors from '../constants/colors';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const initialState = {
     inputValues: {
@@ -29,6 +29,8 @@ const initialState = {
 const SignUpForm = props => {
 
     const dispatch = useDispatch();
+    const userData = useSelector(state => state.auth);
+    console.log(stateData);
 
     const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +43,7 @@ const SignUpForm = props => {
 
     useEffect(() => {
         if (error) {
-            Alert.alert("An error occured", error, [{ text: "Okay" }]);
+            Alert.alert("Wystąpił błąd", error, [{ text: "Ok" }]);
         }
     }, [error])
 
@@ -107,7 +109,7 @@ const SignUpForm = props => {
                 isLoading ?
                     <ActivityIndicator size={'small'} color={colors.primary} style={{ marginTop: 10 }} /> :
                     <SubmitButton
-                        title="Sign up"
+                        title="Utwórz konto"
                         onPress={authHandler}
                         style={{ marginTop: 20 }}
                         disabled={!formState.formIsValid} />
