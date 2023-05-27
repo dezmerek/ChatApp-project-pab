@@ -2,10 +2,14 @@ import { StyleSheet, Text, TextInput, View } from "react-native"
 import { FontAwesome } from '@expo/vector-icons';
 
 import colors from "../constants/colors";
+import { useState } from "react";
 
 const Input = props => {
 
+    const [value, setValue] = useState(props.initialValue)
+
     const onChangeText = text => {
+        setValue(text);
         props.onInputChanged(props.id, text);
     }
 
@@ -22,7 +26,8 @@ const Input = props => {
             <TextInput
                 {...props}
                 style={styles.input}
-                onChangeText={onChangeText} />
+                onChangeText={onChangeText}
+                value={value} />
         </View>
 
         {
