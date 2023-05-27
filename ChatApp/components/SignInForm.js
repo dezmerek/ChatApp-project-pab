@@ -49,7 +49,6 @@ const SignInForm = props => {
                 formState.inputValues.password,
             );
             await dispatch(action);
-            setError(null);
         } catch (error) {
             setError(error.message);
             setIsLoading(false);
