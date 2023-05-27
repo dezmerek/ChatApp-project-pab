@@ -1,31 +1,60 @@
-import React, { useCallback, useReducer } from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
 import { Feather } from '@expo/vector-icons';
 
 import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducer';
+import { signIn } from '../utils/actions/authActions';
+import { Alert } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 const initialState = {
+    inputValues: {
+        email: "",
+        password: "",
+    },
     inputValidities: {
         email: false,
         password: false,
     },
     formIsValid: false
-};
-
-/*const errorMessages = {
-    email: 'Nieprawidłowy format adresu email',
-    password: 'Nieprawidłowe hasło'
-};*/
+}
 
 const SignInForm = props => {
+
+    const dispatch = useDispatch();
+
+    const [error, setError] = useState();
+    const [isLoading, setIsLoading] = useState(false);
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
 
     const inputChangedHandler = useCallback((inputId, inputValue) => {
         const result = validateInput(inputId, inputValue);
-        dispatchFormState({ inputId, validationResult: result });
+        dispatchFormState({ inputId, validationResult: result, inputValue })
     }, [dispatchFormState]);
+
+    useEffect(() => {
+        if (error) {
+            Alert.alert("Wystąpił błąd", error, [{ text: "Ok" }]);
+        }
+    }, [error])
+
+    const authHandler = useCallback(async () => {
+        try {
+            setIsLoading(true);
+
+            const action = signIn(
+                formState.inputValues.email,
+                formState.inputValues.password,
+            );
+            dispatch(action);
+            setError(null);
+        } catch (error) {
+            setError(error.message);
+            setIsLoading(false);
+        }
+    }, [dispatch, formState]);
 
     return (
         <>
@@ -37,7 +66,7 @@ const SignInForm = props => {
                 autoCapitalize="none"
                 keyboardType="email-address"
                 onInputChanged={inputChangedHandler}
-                errorText={formState.inputValidities["email"] /*? errorMessages.email : ''*/} />
+                errorText={formState.inputValidities["email"]} />
 
             <Input
                 id="password"
@@ -47,15 +76,15 @@ const SignInForm = props => {
                 autoCapitalize="none"
                 secureTextEntry
                 onInputChanged={inputChangedHandler}
-                errorText={formState.inputValidities["password"] /*? errorMessages.password : ''*/} />
+                errorText={formState.inputValidities["password"]} />
 
             <SubmitButton
                 title="Zaloguj się"
-                onPress={() => console.log("Button pressed")}
+                onPress={authHandler}
                 style={{ marginTop: 20 }}
                 disabled={!formState.formIsValid} />
         </>
-    );
+    )
 };
 
 export default SignInForm;

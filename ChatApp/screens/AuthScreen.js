@@ -41,6 +41,7 @@ const AuthScreen = props => {
                         style={styles.linkContainer}>
                         <Text style={styles.link}>{`Przejdź do ${isSignUp ? "logowania" : "tworzenia konta"}`}</Text>
                     </TouchableOpacity>
+
                 </KeyboardAvoidingView>
 
             </ScrollView>
