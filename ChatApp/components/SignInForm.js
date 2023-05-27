@@ -6,8 +6,9 @@ import { Feather } from '@expo/vector-icons';
 import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducer';
 import { signIn } from '../utils/actions/authActions';
-import { Alert } from 'react-native';
+import { ActivityIndicator, Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
+import colors from '../constants/colors';
 
 const initialState = {
     inputValues: {
@@ -48,6 +49,7 @@ const SignInForm = props => {
                 formState.inputValues.email,
                 formState.inputValues.password,
             );
+            setError(null);
             await dispatch(action);
         } catch (error) {
             setError(error.message);
@@ -77,11 +79,15 @@ const SignInForm = props => {
                 onInputChanged={inputChangedHandler}
                 errorText={formState.inputValidities["password"]} />
 
-            <SubmitButton
-                title="Zaloguj się"
-                onPress={authHandler}
-                style={{ marginTop: 20 }}
-                disabled={!formState.formIsValid} />
+            {
+                isLoading ?
+                    <ActivityIndicator size={'small'} color={colors.primary} style={{ marginTop: 10 }} /> :
+                    <SubmitButton
+                        title="Zaloguj się"
+                        onPress={authHandler}
+                        style={{ marginTop: 20 }}
+                        disabled={!formState.formIsValid} />
+            }
         </>
     )
 };
