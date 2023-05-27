@@ -1,25 +1,18 @@
 import React from "react";
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
 
-import ChatSettingsScreen from '../screens/ChatSettingsScreen';
-import SettingsScreen from '../screens/SettingsScreen';
-import ChatListScreen from "../screens/ChatListScreen";
 import MainNavigator from "./MainNavigator";
 import AuthScreen from "../screens/AuthScreen";
-
-const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
+import { useSelector } from "react-redux";
 
 const AppNavigator = (props) => {
 
-    const isAuth = false;
+    const isAuth = useSelector(state => state.auth.token !== null && state.auth.token !== "");
+
     return (
         <NavigationContainer>
             {isAuth && <MainNavigator />}
-            {!isAuth && <AuthScreen/>}
+            {!isAuth && <AuthScreen />}
         </NavigationContainer>
     );
 };
