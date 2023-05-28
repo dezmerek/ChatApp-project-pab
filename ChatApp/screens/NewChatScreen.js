@@ -8,7 +8,7 @@ import colors from '../constants/colors';
 import commonStyles from '../constants/commonStyles';
 import { searchUsers } from '../utils/actions/userActions';
 import DataItem from '../components/DataItem';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setStoredUsers } from '../store/userSlice';
 
 const NewChatScreen = props => {
@@ -75,7 +75,7 @@ const NewChatScreen = props => {
             <FontAwesome name="search" size={15} color={colors.lightGrey} />
 
             <TextInput
-                placeholder='Szukaj'
+                placeholder='Search'
                 style={styles.searchBox}
                 onChangeText={(text) => setSearchTerm(text)}
             />
