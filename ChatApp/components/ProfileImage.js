@@ -6,8 +6,12 @@ import userImage from '../assets/images/userImage.jpeg';
 import colors from '../constants/colors';
 import { launchImagePicker, uploadImageAsync } from '../utils/imagePickerHelper';
 import { updateSignedInUserData } from '../utils/actions/authActions';
+import { useDispatch } from 'react-redux';
+import { updateLoggedInUserData } from '../store/authSlice';
 
 const ProfileImage = props => {
+    const dispatch = useDispatch();
+
     const source = props.uri ? { uri: props.uri } : userImage;
 
     const [image, setImage] = useState(source);
@@ -27,7 +31,10 @@ const ProfileImage = props => {
                 throw new Error("Could not upload image");
             }
 
-            await updateSignedInUserData(userId, { profilePicture: uploadUrl });
+            const newData = { profilePicture: uploadUrl };
+
+            await updateSignedInUserData(userId, newData);
+            dispatch(updateLoggedInUserData({ newData }));
 
             setImage({ uri: uploadUrl });
         }
