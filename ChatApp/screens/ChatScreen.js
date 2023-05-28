@@ -5,10 +5,15 @@ import { Feather } from '@expo/vector-icons';
 
 import backgroundImage from '../assets/images/droplet.png';
 import colors from '../constants/colors';
+import { useSelector } from 'react-redux';
 
 const ChatScreen = props => {
-
+    const storedUsers = useSelector(state => state.users.storedUsers);
+    console.log(storedUsers);
     const [messageText, setMessageText] = useState("");
+
+    const chatData = props.route?.params?.newChatData;
+    console.log(chatData);
 
     const sendMessage = useCallback(() => {
         setMessageText("");
