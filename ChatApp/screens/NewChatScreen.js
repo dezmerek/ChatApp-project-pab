@@ -3,25 +3,23 @@ import { View, Text, StyleSheet, Button } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/CustomHeaderButton';
 
-const ChatListScreen = props => {
+const NewChatScreen = props => {
 
     useEffect(() => {
         props.navigation.setOptions({
-            headerRight: () => {
+            headerLeft: () => {
                 return <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                     <Item
-                        title="Nowy czat"
-                        iconName="create-outline"
-                        onPress={() => props.navigation.navigate("NewChat")} />
+                        title="Zamknij"
+                        onPress={() => props.navigation.goback()} />
                 </HeaderButtons>
-            }
+            },
+            headerTitle: "Nowy czat"
         })
     }, []);
 
     return <View style={styles.container}>
-        <Text>Lista czatow</Text>
-
-        <Button title='Przejdz do widoku czatu' onPress={() => props.navigation.navigate("ChatScreen")} />
+        <Text>Nowy czat</Text>
     </View>
 };
 
@@ -33,4 +31,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ChatListScreen;
+export default NewChatScreen;
