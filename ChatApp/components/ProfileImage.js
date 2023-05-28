@@ -1,24 +1,36 @@
-import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import * as ImagePicker from 'expo-image-picker';
 
 import userImage from '../assets/images/userImage.jpeg';
 import colors from '../constants/colors';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { launchImagePicker } from '../utils/imagePickerHelper';
 
 const ProfileImage = props => {
+    const source = props.uri ? { uri: props.uri } : userImage;
 
-    const pickImage = () => {
-        launchImagePicker();
+    const [image, setImage] = useState(source);
+
+    const pickImage = async () => {
+        try {
+            const tempUri = await launchImagePicker();
+
+            if (!tempUri) return;
+
+            // Upload the image
+
+            setImage({ uri: tempUri });
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 
     return (
         <TouchableOpacity onPress={pickImage}>
             <Image
                 style={{ ...styles.image, ...{ width: props.size, height: props.size } }}
-                source={userImage} />
+                source={image} />
 
             <View style={styles.editIconContainer}>
                 <FontAwesome name="pencil" size={15} color="black" />
@@ -39,7 +51,7 @@ const styles = StyleSheet.create({
         right: 0,
         backgroundColor: colors.lightGrey,
         borderRadius: 20,
-        padding: 8,
+        padding: 8
     }
 })
 
