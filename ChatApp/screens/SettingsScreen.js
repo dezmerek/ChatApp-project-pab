@@ -87,7 +87,8 @@ const SettingsScreen = props => {
             <ProfileImage
                 size={80}
                 userId={userData.userId}
-                uri={userData.profilePicture} />
+                uri={userData.profilePicture}
+                showEditButton={true} />
 
             <Input
                 id="firstName"
