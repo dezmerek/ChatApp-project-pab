@@ -4,12 +4,16 @@ import { FontAwesome } from '@expo/vector-icons';
 
 import userImage from '../assets/images/userImage.jpeg';
 import colors from '../constants/colors';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const ProfileImage = props => {
 
+    const pickImage = () => {
+
+    }
 
     return (
-        <View>
+        <TouchableOpacity onPress={pickImage}>
             <Image
                 style={{ ...styles.image, ...{ width: props.size, height: props.size } }}
                 source={userImage} />
@@ -17,7 +21,7 @@ const ProfileImage = props => {
             <View style={styles.editIconContainer}>
                 <FontAwesome name="pencil" size={15} color="black" />
             </View>
-        </View>
+        </TouchableOpacity>
     )
 };
 
