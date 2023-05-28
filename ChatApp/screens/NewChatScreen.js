@@ -12,6 +12,7 @@ const NewChatScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
     const [users, setUsers] = useState();
     const [noResultsFound, setNoResultsFound] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         props.navigation.setOptions({
@@ -26,6 +27,26 @@ const NewChatScreen = props => {
         })
     }, []);
 
+    useEffect(() => {
+        const delaySearch = setTimeout(() => {
+            console.log("abc")
+            if (!searchTerm || searchTerm === "") {
+                setUsers();
+                setNoResultsFound(false);
+                return;
+            }
+
+            setIsLoading(true);
+
+            setUsers({});
+            setNoResultsFound(true);
+
+            setIsLoading(false);
+        }, 500);
+
+        return () => clearTimeout(delaySearch);
+    }, [searchTerm]);
+
     return <PageContainer>
         <View style={styles.searchContainer}>
             <FontAwesome name="search" size={15} color={colors.lightGrey} />
@@ -33,7 +54,7 @@ const NewChatScreen = props => {
             <TextInput
                 placeholder='Search'
                 style={styles.searchBox}
-                onChangeText={() => { }}
+                onChangeText={(text) => setSearchTerm(text)}
             />
         </View>
 
