@@ -81,7 +81,11 @@ const NewChatScreen = props => {
                     const userId = itemData.item;
                     const userData = users[userId];
 
-                    return <DataItem />
+                    return <DataItem
+                        title={`${userData.firstName} ${userData.lastName}`}
+                        subTitle={userData.about}
+                        image={userData.profilePicture}
+                    />
                 }}
             />
         }
