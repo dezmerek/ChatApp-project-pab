@@ -76,6 +76,11 @@ const Bubble = props => {
         case "reply":
             bubbleStyle.backgroundColor = '#F2F2F2';
             break;
+        case "info":
+            bubbleStyle.backgroundColor = 'white';
+            bubbleStyle.alignItems = 'center';
+            textStyle.color = colors.textColor;
+            break;
         default:
             break;
     }
@@ -97,7 +102,7 @@ const Bubble = props => {
                 <View style={bubbleStyle}>
 
                     {
-                        name &&
+                        name && type !== "info" &&
                         <Text style={styles.name}>{name}</Text>
                     }
 
@@ -123,7 +128,7 @@ const Bubble = props => {
                     }
 
                     {
-                        dateString && <View style={styles.timeContainer}>
+                        dateString && type !== "info" && <View style={styles.timeContainer}>
                             {isStarred && <FontAwesome name='star' size={14} color={colors.textColor} style={{ marginRight: 5 }} />}
                             <Text style={styles.time}>{dateString}</Text>
                         </View>
@@ -133,9 +138,9 @@ const Bubble = props => {
                         <MenuTrigger />
 
                         <MenuOptions>
-                            <MenuItem text='Skopiuj do schowka' icon={'copy'} onSelect={() => copyToClipboard(text)} />
-                            <MenuItem text='Oznacz gwiazdą' icon={'star-o'} iconPack={FontAwesome} onSelect={() => starMessage(messageId, chatId, userId)} />
-                            <MenuItem text='Odpowiedź' icon='arrow-left-circle' onSelect={setReply} />
+                            <MenuItem text='Copy to clipboard' icon={'copy'} onSelect={() => copyToClipboard(text)} />
+                            <MenuItem text={`${isStarred ? 'Unstar' : 'Star'} message`} icon={isStarred ? 'star-o' : 'star'} iconPack={FontAwesome} onSelect={() => starMessage(messageId, chatId, userId)} />
+                            <MenuItem text='Reply' icon='arrow-left-circle' onSelect={setReply} />
 
                         </MenuOptions>
                     </Menu>
