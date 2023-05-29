@@ -75,7 +75,7 @@ const ChatListScreen = props => {
 
     return <PageContainer>
 
-        <PageTitle text="Chats" />
+        <PageTitle text="Czaty" />
 
         <View>
             <TouchableOpacity onPress={() => props.navigation.navigate("NewChat", { isGroupChat: true })}>
