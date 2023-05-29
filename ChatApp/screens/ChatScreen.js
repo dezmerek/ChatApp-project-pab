@@ -81,7 +81,7 @@ const ChatScreen = (props) => {
             await sendTextMessage(chatId, userData.userId, messageText, replyingTo && replyingTo.key);
 
             setMessageText("");
-            setReplyingTo(null)
+            setReplyingTo(null);
         } catch (error) {
             console.log(error);
             setErrorBannerText("Nie udało się wysłać wiadomości");
@@ -129,6 +129,7 @@ const ChatScreen = (props) => {
                                         chatId={chatId}
                                         date={message.sentAt}
                                         setReply={() => setReplyingTo(message)}
+                                        replyingTo={message.replyTo && chatMessages.find(i => i.key === message.replyTo)}
                                     />
                                 }}
                             />
