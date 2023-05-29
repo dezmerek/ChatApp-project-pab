@@ -16,6 +16,7 @@ import { ActivityIndicator, View } from "react-native";
 import colors from "../constants/colors";
 import commonStyles from "../constants/commonStyles";
 import { setStoredUsers } from "../store/userSlice";
+import { setChatMessages } from "../store/messagesSlice";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -145,6 +146,14 @@ const MainNavigator = (props) => {
                         dispatch(setChatsData({ chatsData }));
                         setIsLoading(false);
                     }
+                })
+
+                const messagesRef = child(dbRef, `messages/${chatId}`);
+                refs.push(messagesRef);
+
+                onValue(messagesRef, messagesSnapshot => {
+                    const messagesData = messagesSnapshot.val();
+                    dispatch(setChatMessages({ chatId, messagesData }));
                 })
 
                 if (chatsFoundCount == 0) {
