@@ -111,7 +111,7 @@ const SignUpForm = props => {
                 isLoading ?
                     <ActivityIndicator size={'small'} color={colors.primary} style={{ marginTop: 10 }} /> :
                     <SubmitButton
-                        title="Sign up"
+                        title="Zarejestruj się"
                         onPress={authHandler}
                         style={{ marginTop: 20 }}
                         disabled={!formState.formIsValid} />
