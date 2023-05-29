@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -12,6 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFirebaseApp } from "../utils/firebaseHelper";
 import { child, getDatabase, off, onValue, ref } from "firebase/database";
 import { setChatsData } from "../store/chatSlice";
+import { ActivityIndicator, View } from "react-native";
+import colors from "../constants/colors";
+import commonStyles from "../constants/commonStyles";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -26,7 +29,7 @@ const TabNavigator = () => {
                 name="ChatList"
                 component={ChatListScreen}
                 options={{
-                    tabBarLabel: "Czat",
+                    tabBarLabel: "Chats",
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="chatbubble-outline" size={size} color={color} />
                     ),
@@ -36,7 +39,7 @@ const TabNavigator = () => {
                 name="Settings"
                 component={SettingsScreen}
                 options={{
-                    tabBarLabel: "Ustawienia",
+                    tabBarLabel: "Settings",
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="settings-outline" size={size} color={color} />
                     ),
@@ -87,6 +90,8 @@ const MainNavigator = (props) => {
 
     const dispatch = useDispatch();
 
+    const [isLoading, setIsLoading] = useState(true);
+
     const userData = useSelector(state => state.auth.userData);
     const storedUsers = useSelector(state => state.users.storedUsers);
 
@@ -123,8 +128,13 @@ const MainNavigator = (props) => {
 
                     if (chatsFoundCount >= chatIds.length) {
                         dispatch(setChatsData({ chatsData }));
+                        setIsLoading(false);
                     }
                 })
+
+                if (chatsFoundCount == 0) {
+                    setIsLoading(false);
+                }
             }
 
         })
@@ -134,6 +144,12 @@ const MainNavigator = (props) => {
             refs.forEach(ref => off(ref));
         }
     }, []);
+
+    if (isLoading) {
+        <View style={commonStyles.center}>
+            <ActivityIndicator size={'large'} color={colors.primary} />
+        </View>
+    }
 
 
     return (
