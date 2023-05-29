@@ -28,9 +28,12 @@ const NewChatScreen = props => {
 
     const selectedUsersFlatList = useRef();
 
+    const chatId = props.route.params && props.route.params.chatId;
     const existingUsers = props.route.params && props.route.params.existingUsers;
     const isGroupChat = props.route.params && props.route.params.isGroupChat;
-    const isGroupChatDisabled = selectedUsers.length === 0 || chatName === "";
+    const isGroupChatDisabled = selectedUsers.length === 0 || (isNewChat && chatName === "");
+
+    const isNewChat = !chatId;
 
     useEffect(() => {
         props.navigation.setOptions({
@@ -46,11 +49,12 @@ const NewChatScreen = props => {
                     {
                         isGroupChat &&
                         <Item
-                            title="Create"
+                            title={isNewChat ? "Create" : "Add"}
                             disabled={isGroupChatDisabled}
                             color={isGroupChatDisabled ? colors.lightGrey : undefined}
                             onPress={() => {
-                                props.navigation.navigate("ChatList", {
+                                const screenName = isNewChat ? "ChatList" : "ChatSettings";
+                                props.navigation.navigate(screenName, {
                                     selectedUsers,
                                     chatName
                                 })
@@ -110,43 +114,45 @@ const NewChatScreen = props => {
     return <PageContainer>
 
         {
-            isGroupChat &&
-            <>
-                <View style={styles.chatNameContainer}>
-                    <View style={styles.inputContainer}>
-                        <TextInput
-                            style={styles.textbox}
-                            placeholder="Enter a name for your chat"
-                            autoCorrect={false}
-                            autoComplete={false}
-                            onChangeText={text => setChatName(text)}
-                        />
-                    </View>
-                </View>
-
-                <View style={styles.selectedUsersContainer}>
-                    <FlatList
-                        style={styles.selectedUsersList}
-                        data={selectedUsers}
-                        horizontal={true}
-                        keyExtractor={item => item}
-                        contentContainerStyle={{ alignItems: 'center' }}
-                        ref={ref => selectedUsersFlatList.current = ref}
-                        onContentSizeChange={() => selectedUsersFlatList.current.scrollToEnd()}
-                        renderItem={itemData => {
-                            const userId = itemData.item;
-                            const userData = storedUsers[userId];
-                            return <ProfileImage
-                                style={styles.selectedUserStyle}
-                                size={40}
-                                uri={userData.profilePicture}
-                                onPress={() => userPressed(userId)}
-                                showRemoveButton={true}
-                            />
-                        }}
+            isNewChat && isGroupChat &&
+            <View style={styles.chatNameContainer}>
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        style={styles.textbox}
+                        placeholder="Enter a name for your chat"
+                        autoCorrect={false}
+                        autoComplete={false}
+                        onChangeText={text => setChatName(text)}
                     />
                 </View>
-            </>
+            </View>
+        }
+
+
+        {
+            isGroupChat &&
+            <View style={styles.selectedUsersContainer}>
+                <FlatList
+                    style={styles.selectedUsersList}
+                    data={selectedUsers}
+                    horizontal={true}
+                    keyExtractor={item => item}
+                    contentContainerStyle={{ alignItems: 'center' }}
+                    ref={ref => selectedUsersFlatList.current = ref}
+                    onContentSizeChange={() => selectedUsersFlatList.current.scrollToEnd()}
+                    renderItem={itemData => {
+                        const userId = itemData.item;
+                        const userData = storedUsers[userId];
+                        return <ProfileImage
+                            style={styles.selectedUserStyle}
+                            size={40}
+                            uri={userData.profilePicture}
+                            onPress={() => userPressed(userId)}
+                            showRemoveButton={true}
+                        />
+                    }}
+                />
+            </View>
         }
 
 
