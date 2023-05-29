@@ -7,11 +7,13 @@ import PageTitle from '../components/PageTitle';
 import ProfileImage from '../components/ProfileImage';
 import SubmitButton from '../components/SubmitButton';
 import colors from '../constants/colors';
+import { removeUserFromChat } from '../utils/actions/chatActions';
 import { getUserChats } from '../utils/actions/userActions';
 
 const ContactScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
     const storedUsers = useSelector(state => state.users.storedUsers);
+    const userData = useSelector(state => state.auth.userData);
     const currentUser = storedUsers[props.route.params.uid];
 
     const storedChats = useSelector(state => state.chats.chatsData);
@@ -33,11 +35,11 @@ const ContactScreen = props => {
 
     }, [])
 
-    const removeFromChat = useCallback(() => {
+    const removeFromChat = useCallback(async () => {
         try {
             setIsLoading(true);
 
-
+            await removeUserFromChat(userData, currentUser, chatData);
 
             props.navigation.goBack();
         } catch (error) {
