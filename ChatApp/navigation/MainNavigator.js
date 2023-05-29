@@ -32,7 +32,7 @@ const TabNavigator = () => {
                 name="ChatList"
                 component={ChatListScreen}
                 options={{
-                    tabBarLabel: "Czaty",
+                    tabBarLabel: "Chats",
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="chatbubble-outline" size={size} color={color} />
                     ),
@@ -42,7 +42,7 @@ const TabNavigator = () => {
                 name="Settings"
                 component={SettingsScreen}
                 options={{
-                    tabBarLabel: "Ustawienia",
+                    tabBarLabel: "Settings",
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="settings-outline" size={size} color={color} />
                     ),
@@ -66,23 +66,24 @@ const StackNavigator = () => {
                     component={ChatScreen}
                     options={{
                         headerTitle: "",
-                        headerBackTitle: "Wróć",
+                        headerBackTitle: "Back",
                     }}
                 />
                 <Stack.Screen
                     name="ChatSettings"
                     component={ChatSettingsScreen}
                     options={{
-                        headerTitle: "Ustawienia",
-                        headerBackTitle: "Wróć",
+                        headerTitle: "",
+                        headerBackTitle: "Back",
+                        headerShadowVisible: false
                     }}
                 />
                 <Stack.Screen
                     name="Contact"
                     component={ContactScreen}
                     options={{
-                        headerTitle: "Kontakt info",
-                        headerBackTitle: "Wróć",
+                        headerTitle: "Contact info",
+                        headerBackTitle: "Back",
                     }}
                 />
             </Stack.Group>
@@ -132,6 +133,11 @@ const MainNavigator = (props) => {
                     const data = chatSnapshot.val();
 
                     if (data) {
+
+                        if (!data.users.includes(userData.userId)) {
+                            return;
+                        }
+
                         data.key = chatSnapshot.key;
 
                         data.users.forEach(userId => {

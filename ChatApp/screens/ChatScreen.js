@@ -62,7 +62,7 @@ const ChatScreen = (props) => {
         return messageList;
     });
 
-    const chatData = (chatId && storedChats[chatId]) || props.route?.params?.newChatData;
+    const chatData = (chatId && storedChats[chatId]) || props.route?.params?.newChatData || {};
 
     const getChatTitleFromName = () => {
         const otherUserId = chatUsers.find(uid => uid !== userData.userId);
@@ -71,11 +71,11 @@ const ChatScreen = (props) => {
         return otherUserData && `${otherUserData.firstName} ${otherUserData.lastName}`;
     }
 
-    const title = chatData.chatName ?? getChatTitleFromName();
-
     useEffect(() => {
+        if (!chatData) return;
+
         props.navigation.setOptions({
-            headerTitle: title,
+            headerTitle: chatData.chatName ?? getChatTitleFromName(),
             headerRight: () => {
                 return <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                     {
@@ -92,7 +92,7 @@ const ChatScreen = (props) => {
             }
         })
         setChatUsers(chatData.users)
-    }, [chatUsers, title])
+    }, [chatUsers])
 
     const sendMessage = useCallback(async () => {
 
