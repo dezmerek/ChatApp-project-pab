@@ -36,7 +36,8 @@ const ContactScreen = props => {
     const removeFromChat = useCallback(() => {
         try {
             setIsLoading(true);
-            // Remove user
+
+
 
             props.navigation.goBack();
         } catch (error) {
