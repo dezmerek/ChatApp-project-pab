@@ -23,7 +23,7 @@ const MenuItem = props => {
 
     const Icon = props.iconPack ?? Feather;
 
-    return <MenuOption onSelect={props.onSelect}>
+    return <MenuOption onSelect={props.onSelect} >
         <View style={styles.menuItemContainer}>
             <Text style={styles.menuText}>{props.text}</Text>
             <Icon name={props.icon} size={18} />
