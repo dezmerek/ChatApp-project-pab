@@ -117,7 +117,6 @@ const NewChatScreen = props => {
                             style={styles.textbox}
                             placeholder="Wpisz nazwę czatu"
                             autoCorrect={false}
-                            autoComplete={false}
                             onChangeText={text => setChatName(text)}
                         />
                     </View>
@@ -131,7 +130,12 @@ const NewChatScreen = props => {
                         keyExtractor={item => item}
                         contentContainerStyle={{ alignItems: 'center' }}
                         ref={ref => selectedUsersFlatList.current = ref}
-                        onContentSizeChange={() => selectedUsersFlatList.current.scrollToEnd()}
+                        onContentSizeChange={() => {
+                            if (selectedUsersFlatList.current && selectedUsers.length > 0) {
+                                selectedUsersFlatList.current.scrollToEnd();
+                            }
+                        }}
+
                         renderItem={itemData => {
                             const userId = itemData.item;
                             const userData = storedUsers[userId];
