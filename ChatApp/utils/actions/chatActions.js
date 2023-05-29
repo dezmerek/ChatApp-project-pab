@@ -27,7 +27,6 @@ export const createChat = async (loggedInUserId, chatData) => {
 }
 
 export const sendTextMessage = async (chatId, senderData, messageText, replyTo, chatUsers) => {
-    console.log("ABC");
     await sendMessage(chatId, senderData.userId, messageText, null, replyTo, null);
 
     const otherUsers = chatUsers.filter(uid => uid !== senderData.userId);
@@ -38,8 +37,11 @@ export const sendInfoMessage = async (chatId, senderId, messageText) => {
     await sendMessage(chatId, senderId, messageText, null, null, "info");
 }
 
-export const sendImage = async (chatId, senderId, imageUrl, replyTo) => {
-    await sendMessage(chatId, senderId, 'Image', imageUrl, replyTo, null);
+export const sendImage = async (chatId, senderData, imageUrl, replyTo, chatUsers) => {
+    await sendMessage(chatId, senderData.userId, 'Image', imageUrl, replyTo, null);
+
+    const otherUsers = chatUsers.filter(uid => uid !== senderData.userId);
+    await sendPushNotificationForUsers(otherUsers, `${senderData.firstName} ${senderData.lastName}`, `${senderData.firstName} sent an image`);
 }
 
 export const updateChatData = async (chatId, userId, chatData) => {
