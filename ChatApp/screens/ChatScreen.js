@@ -78,9 +78,10 @@ const ChatScreen = (props) => {
                 setChatId(id);
             }
 
-            await sendTextMessage(chatId, userData.userId, messageText);
+            await sendTextMessage(chatId, userData.userId, messageText, replyingTo && replyingTo.key);
 
             setMessageText("");
+            setReplyingTo(null)
         } catch (error) {
             console.log(error);
             setErrorBannerText("Nie udało się wysłać wiadomości");
