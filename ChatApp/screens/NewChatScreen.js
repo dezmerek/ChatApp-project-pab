@@ -20,18 +20,19 @@ const NewChatScreen = props => {
     const [noResultsFound, setNoResultsFound] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [chatName, setChatName] = useState("");
+    const [selectedUsers, setSelectedUsers] = useState([]);
 
     const userData = useSelector(state => state.auth.userData);
 
     const isGroupChat = props.route.params && props.route.params.isGroupChat;
-    const isGroupChatDisabled = chatName === "";
+    const isGroupChatDisabled = selectedUsers.length === 0 || chatName === "";
 
     useEffect(() => {
         props.navigation.setOptions({
             headerLeft: () => {
                 return <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                     <Item
-                        title="Zamknij"
+                        title="Close"
                         onPress={() => props.navigation.goBack()} />
                 </HeaderButtons>
             },
@@ -40,7 +41,7 @@ const NewChatScreen = props => {
                     {
                         isGroupChat &&
                         <Item
-                            title="Stwórz"
+                            title="Create"
                             disabled={isGroupChatDisabled}
                             color={isGroupChatDisabled ? colors.lightGrey : undefined}
                             onPress={() => { }} />
@@ -49,7 +50,7 @@ const NewChatScreen = props => {
             },
             headerTitle: isGroupChat ? "Dodaj uczestników" : "Nowy czat"
         })
-    }, [chatName]);
+    }, [chatName, selectedUsers]);
 
     useEffect(() => {
         const delaySearch = setTimeout(async () => {
@@ -81,9 +82,19 @@ const NewChatScreen = props => {
     }, [searchTerm]);
 
     const userPressed = userId => {
-        props.navigation.navigate("ChatList", {
-            selectedUserId: userId
-        })
+
+        if (isGroupChat) {
+            const newSelectedUsers = selectedUsers.includes(userId) ?
+                selectedUsers.filter(id => id !== userId) :
+                selectedUsers.concat(userId);
+
+            setSelectedUsers(newSelectedUsers);
+        }
+        else {
+            props.navigation.navigate("ChatList", {
+                selectedUserId: userId
+            })
+        }
     }
 
     return <PageContainer>
@@ -96,12 +107,12 @@ const NewChatScreen = props => {
                         style={styles.textbox}
                         placeholder="Wpisz nazwę czatu"
                         autoCorrect={false}
-                        value={chatName}
                         onChangeText={text => setChatName(text)}
                     />
                 </View>
             </View>
         }
+
 
         <View style={styles.searchContainer}>
             <FontAwesome name="search" size={15} color={colors.lightGrey} />
@@ -134,7 +145,7 @@ const NewChatScreen = props => {
                         image={userData.profilePicture}
                         onPress={() => userPressed(userId)}
                         type={isGroupChat ? "checkbox" : ""}
-                        isChecked={false}
+                        isChecked={selectedUsers.includes(userId)}
                     />
                 }}
             />
