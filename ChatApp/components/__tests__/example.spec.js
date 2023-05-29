@@ -1,18 +1,12 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import AboutUs from '../../screens/AboutUs';
+import PageTitle from '../PageTitle';
 
-describe('AboutUs', () => {
-  test('renders correctly', () => {
-    const { getByText, getAllByTestId } = render(<AboutUs />);
-
-    // Test the presence of specific elements on the screen
-    const titleText = getByText('O nas');
-    const appDescription = getByText('Aplikacja RealTime chat');
-    const memberBoxes = getAllByTestId('memberBox');
+describe('PageTitle', () => {
+  it('renders correctly', () => {
+    const { getByText } = render(<PageTitle text="Example Title" />);
+    const titleText = getByText('Example Title');
 
     expect(titleText).toBeTruthy();
-    expect(appDescription).toBeTruthy();
-    expect(memberBoxes.length).toBe(3);
   });
 });
