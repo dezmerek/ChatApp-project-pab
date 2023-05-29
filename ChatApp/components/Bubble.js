@@ -15,6 +15,11 @@ const Bubble = props => {
             bubbleStyle.alignItems = 'center';
             bubbleStyle.marginTop = 10;
             break;
+        case "error":
+            bubbleStyle.backgroundColor = colors.red;
+            textStyle.color = 'white';
+            bubbleStyle.marginTop = 10;
+            break;
 
         default:
             break;
@@ -41,7 +46,7 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         padding: 5,
         marginBottom: 10,
-        borderColor: '#99ff99',
+        borderColor: '#E2DACC',
         borderWidth: 1
     },
     text: {
