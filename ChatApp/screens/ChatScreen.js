@@ -25,6 +25,8 @@ import { createChat, sendImage, sendTextMessage } from "../utils/actions/chatAct
 import ReplyTo from "../components/ReplyTo";
 import { launchImagePicker, openCamera, uploadImageAsync } from "../utils/imagePickerHelper";
 import AwesomeAlert from 'react-native-awesome-alerts';
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../components/CustomHeaderButton";
 
 const ChatScreen = (props) => {
     const [chatUsers, setChatUsers] = useState([]);
@@ -73,7 +75,19 @@ const ChatScreen = (props) => {
 
     useEffect(() => {
         props.navigation.setOptions({
-            headerTitle: title
+            headerTitle: title,
+            headerRight: () => {
+                return <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                    {
+                        chatId &&
+                        <Item
+                            title="Chat settings"
+                            iconName="settings-outline"
+                            onPress={() => { }}
+                        />
+                    }
+                </HeaderButtons>
+            }
         })
         setChatUsers(chatData.users)
     }, [chatUsers])
@@ -158,7 +172,7 @@ const ChatScreen = (props) => {
                 <PageContainer style={{ backgroundColor: 'transparent' }}>
 
                     {
-                        !chatId && <Bubble text='To jest nowy czat.' type="system" />
+                        !chatId && <Bubble text='This is a new chat. Say hi!' type="system" />
                     }
 
                     {
@@ -247,13 +261,13 @@ const ChatScreen = (props) => {
 
                 <AwesomeAlert
                     show={tempImageUri !== ""}
-                    title='Wysłać zdjęcie?'
+                    title='Send image?'
                     closeOnTouchOutside={true}
                     closeOnHardwareBackPress={false}
                     showCancelButton={true}
                     showConfirmButton={true}
-                    cancelText='Analuj'
-                    confirmText="Wyślij zdjęcie"
+                    cancelText='Cancel'
+                    confirmText="Send image"
                     confirmButtonColor={colors.primary}
                     cancelButtonColor={colors.red}
                     titleStyle={styles.popupTitleStyle}

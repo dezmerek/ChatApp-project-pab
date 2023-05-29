@@ -36,7 +36,7 @@ const NewChatScreen = props => {
             headerLeft: () => {
                 return <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                     <Item
-                        title="Zamknij"
+                        title="Close"
                         onPress={() => props.navigation.goBack()} />
                 </HeaderButtons>
             },
