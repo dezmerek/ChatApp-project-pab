@@ -20,6 +20,7 @@ const AboutUs = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>O nas</Text>
+      <Text>Aplikacja RealTime chat</Text>
       <View style={styles.membersContainer}>
         {teamMembers.map((member, index) => (
           <View style={styles.memberBox} key={index}>
