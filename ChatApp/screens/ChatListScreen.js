@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, FlatList } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useSelector } from 'react-redux';
 import CustomHeaderButton from '../components/CustomHeaderButton';
@@ -9,8 +9,10 @@ const ChatListScreen = props => {
     const selectedUser = props.route?.params?.selectedUserId;
 
     const userData = useSelector(state => state.auth.userData);
-    const userChats = useSelector(state => state.chats.chatsData);
-    console.log(userChats);
+    const userChats = useSelector(state => {
+        const chatsData = state.chats.chatsData;
+        return Object.values(chatsData);
+    });
 
     useEffect(() => {
         props.navigation.setOptions({
@@ -39,13 +41,19 @@ const ChatListScreen = props => {
 
         props.navigation.navigate("ChatScreen", navigationProps);
 
-    }, [selectedUser])
+    }, [props.route?.params])
 
-    return <View style={styles.container}>
-        <Text>Lista czatów</Text>
+    return <FlatList
+        data={userChats}
+        renderItem={(itemData) => {
+            const chatData = itemData.item;
 
-        <Button title='Przejdź do ekranu czatu' onPress={() => props.navigation.navigate("ChatScreen")} />
-    </View>
+            const otherUserId = chatData.users.find(uid => uid !== userData.userId);
+
+
+            return <Text>{otherUserId}</Text>
+        }}
+    />
 };
 
 const styles = StyleSheet.create({
