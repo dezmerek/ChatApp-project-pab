@@ -133,7 +133,6 @@ const styles = StyleSheet.create({
     },
     timeContainer: {
         flexDirection: 'row',
-        justifyContent: 'flex-row'
     }
 })
 
