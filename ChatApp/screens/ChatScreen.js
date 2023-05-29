@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
     View,
     Text,
@@ -23,7 +23,7 @@ import PageContainer from "../components/PageContainer";
 import Bubble from "../components/Bubble";
 import { createChat, sendImage, sendTextMessage } from "../utils/actions/chatActions";
 import ReplyTo from "../components/ReplyTo";
-import { launchImagePicker, uploadImageAsync } from "../utils/imagePickerHelper";
+import { launchImagePicker, openCamera, uploadImageAsync } from "../utils/imagePickerHelper";
 import AwesomeAlert from 'react-native-awesome-alerts';
 
 const ChatScreen = (props) => {
@@ -34,6 +34,8 @@ const ChatScreen = (props) => {
     const [replyingTo, setReplyingTo] = useState();
     const [tempImageUri, setTempImageUri] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+
+    const flatList = useRef();
 
     const userData = useSelector(state => state.auth.userData);
     const storedUsers = useSelector(state => state.users.storedUsers);
@@ -107,6 +109,17 @@ const ChatScreen = (props) => {
         }
     }, [tempImageUri]);
 
+    const takePhoto = useCallback(async () => {
+        try {
+            const tempUri = await openCamera();
+            if (!tempUri) return;
+
+            setTempImageUri(tempUri);
+        } catch (error) {
+            console.log(error);
+        }
+    }, [tempImageUri]);
+
     const uploadImage = useCallback(async () => {
         setIsLoading(true);
 
@@ -146,7 +159,7 @@ const ChatScreen = (props) => {
                     <PageContainer style={{ backgroundColor: 'transparent' }}>
 
                         {
-                            !chatId && <Bubble text='This is a new chat. Say hi!' type="system" />
+                            !chatId && <Bubble text='To jest nowy czat.' type="system" />
                         }
 
                         {
@@ -156,6 +169,9 @@ const ChatScreen = (props) => {
                         {
                             chatId &&
                             <FlatList
+                                ref={(ref) => flatList.current = ref}
+                                onContentSizeChange={() => flatList.current.scrollToEnd({ animated: false })}
+                                onLayout={() => flatList.current.scrollToEnd({ animated: false })}
                                 data={chatMessages}
                                 renderItem={(itemData) => {
                                     const message = itemData.item;
@@ -212,7 +228,7 @@ const ChatScreen = (props) => {
                     {messageText === "" && (
                         <TouchableOpacity
                             style={styles.mediaButton}
-                            onPress={() => console.log("Pressed!")}
+                            onPress={takePhoto}
                         >
                             <Feather name="camera" size={24} color={colors.blue} />
                         </TouchableOpacity>
@@ -229,13 +245,13 @@ const ChatScreen = (props) => {
 
                     <AwesomeAlert
                         show={tempImageUri !== ""}
-                        title='Send image?'
+                        title='Wysłać zdjęcie?'
                         closeOnTouchOutside={true}
                         closeOnHardwareBackPress={false}
                         showCancelButton={true}
                         showConfirmButton={true}
-                        cancelText='Cancel'
-                        confirmText="Send image"
+                        cancelText='Analuj'
+                        confirmText="Wyślij zdjęcie"
                         confirmButtonColor={colors.primary}
                         cancelButtonColor={colors.red}
                         titleStyle={styles.popupTitleStyle}
