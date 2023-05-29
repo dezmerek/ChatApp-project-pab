@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
+import DataItem from '../components/DataItem';
 import PageContainer from '../components/PageContainer';
 import PageTitle from '../components/PageTitle';
 import ProfileImage from '../components/ProfileImage';
@@ -13,7 +14,7 @@ const ContactScreen = props => {
 
     const storedChats = useSelector(state => state.chats.chatsData);
     const [commonChats, setCommonChats] = useState([]);
-    console.log(commonChats);
+
     useEffect(() => {
 
         const getCommonUserChats = async () => {
@@ -41,6 +42,24 @@ const ContactScreen = props => {
                 <Text style={styles.about} numberOfLines={2}>{currentUser.about}</Text>
             }
         </View>
+
+        {
+            commonChats.length > 0 &&
+            <>
+                <Text style={styles.heading}>{commonChats.length} {commonChats.length === 1 ? "Group" : "Groups"} in Common</Text>
+                {
+                    commonChats.map(cid => {
+                        const chatData = storedChats[cid];
+                        return <DataItem
+                            key={cid}
+                            title={chatData.chatName}
+                            subTitle={chatData.latestMessageText}
+                        />
+                    })
+                }
+            </>
+        }
+
     </PageContainer>
 }
 
@@ -55,6 +74,12 @@ const styles = StyleSheet.create({
         fontSize: 16,
         letterSpacing: 0.3,
         color: colors.grey
+    },
+    heading: {
+        fontFamily: 'bold',
+        letterSpacing: 0.3,
+        color: colors.textColor,
+        marginVertical: 8
     }
 });
 
