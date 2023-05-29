@@ -28,6 +28,7 @@ const NewChatScreen = props => {
 
     const selectedUsersFlatList = useRef();
 
+    const existingUsers = props.route.params && props.route.params.existingUsers;
     const isGroupChat = props.route.params && props.route.params.isGroupChat;
     const isGroupChatDisabled = selectedUsers.length === 0 || chatName === "";
 
@@ -45,7 +46,7 @@ const NewChatScreen = props => {
                     {
                         isGroupChat &&
                         <Item
-                            title="Stwórz"
+                            title="Create"
                             disabled={isGroupChatDisabled}
                             color={isGroupChatDisabled ? colors.lightGrey : undefined}
                             onPress={() => {
@@ -57,7 +58,7 @@ const NewChatScreen = props => {
                     }
                 </HeaderButtons>
             },
-            headerTitle: isGroupChat ? "Dodaj uczestników" : "Nowy czat"
+            headerTitle: isGroupChat ? "Add participants" : "New chat"
         })
     }, [chatName, selectedUsers]);
 
@@ -115,8 +116,9 @@ const NewChatScreen = props => {
                     <View style={styles.inputContainer}>
                         <TextInput
                             style={styles.textbox}
-                            placeholder="Wpisz nazwę czatu"
+                            placeholder="Enter a name for your chat"
                             autoCorrect={false}
+                            autoComplete={false}
                             onChangeText={text => setChatName(text)}
                         />
                     </View>
@@ -130,12 +132,7 @@ const NewChatScreen = props => {
                         keyExtractor={item => item}
                         contentContainerStyle={{ alignItems: 'center' }}
                         ref={ref => selectedUsersFlatList.current = ref}
-                        onContentSizeChange={() => {
-                            if (selectedUsersFlatList.current && selectedUsers.length > 0) {
-                                selectedUsersFlatList.current.scrollToEnd();
-                            }
-                        }}
-
+                        onContentSizeChange={() => selectedUsersFlatList.current.scrollToEnd()}
                         renderItem={itemData => {
                             const userId = itemData.item;
                             const userData = storedUsers[userId];
@@ -157,7 +154,7 @@ const NewChatScreen = props => {
             <FontAwesome name="search" size={15} color={colors.lightGrey} />
 
             <TextInput
-                placeholder='Szukaj'
+                placeholder='Search'
                 style={styles.searchBox}
                 onChangeText={(text) => setSearchTerm(text)}
             />
@@ -177,6 +174,10 @@ const NewChatScreen = props => {
                 renderItem={(itemData) => {
                     const userId = itemData.item;
                     const userData = users[userId];
+
+                    if (existingUsers && existingUsers.includes(userId)) {
+                        return;
+                    }
 
                     return <DataItem
                         title={`${userData.firstName} ${userData.lastName}`}
@@ -198,7 +199,7 @@ const NewChatScreen = props => {
                         size={55}
                         color={colors.lightGrey}
                         style={styles.noResultsIcon} />
-                    <Text style={styles.noResultsText}>Nie znaleziono użytkowników!</Text>
+                    <Text style={styles.noResultsText}>No users found!</Text>
                 </View>
             )
         }
@@ -211,7 +212,7 @@ const NewChatScreen = props => {
                         size={55}
                         color={colors.lightGrey}
                         style={styles.noResultsIcon} />
-                    <Text style={styles.noResultsText}>Wprowadź nazwę, aby wyszukać użytkownika!</Text>
+                    <Text style={styles.noResultsText}>Enter a name to search for a user!</Text>
                 </View>
             )
         }
