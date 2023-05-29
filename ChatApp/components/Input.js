@@ -12,7 +12,7 @@ const Input = props => {
         setValue(text);
         props.onInputChanged(props.id, text);
     }
-        //test
+
     return <View style={styles.container}>
         <Text style={styles.label}>{props.label}</Text>
 

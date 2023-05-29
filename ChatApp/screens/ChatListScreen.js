@@ -28,7 +28,7 @@ const ChatListScreen = props => {
             headerRight: () => {
                 return <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                     <Item
-                        title="Nowy czat"
+                        title="Nowy chat"
                         iconName="create-outline"
                         onPress={() => props.navigation.navigate("NewChat")} />
                 </HeaderButtons>
@@ -96,6 +96,7 @@ const ChatListScreen = props => {
 
                 if (isGroupChat) {
                     title = chatData.chatName;
+                    image = chatData.chatImage;
                 }
                 else {
                     const otherUserId = chatData.users.find(uid => uid !== userData.userId);

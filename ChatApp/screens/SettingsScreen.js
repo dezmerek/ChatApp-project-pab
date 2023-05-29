@@ -95,7 +95,7 @@ const SettingsScreen = props => {
     }
 
     return <PageContainer>
-        <PageTitle text="Settings" />
+        <PageTitle text="Ustawienia" />
 
         <ScrollView contentContainerStyle={styles.formContainer}>
 
@@ -107,7 +107,7 @@ const SettingsScreen = props => {
 
             <Input
                 id="firstName"
-                label="First name"
+                label="Imie"
                 icon="user-o"
                 iconPack={FontAwesome}
                 onInputChanged={inputChangedHandler}
@@ -117,7 +117,7 @@ const SettingsScreen = props => {
 
             <Input
                 id="lastName"
-                label="Last name"
+                label="Nazwisko"
                 icon="user-o"
                 iconPack={FontAwesome}
                 onInputChanged={inputChangedHandler}
@@ -138,7 +138,7 @@ const SettingsScreen = props => {
 
             <Input
                 id="about"
-                label="About"
+                label="O mnie"
                 icon="user-o"
                 iconPack={FontAwesome}
                 onInputChanged={inputChangedHandler}
@@ -148,14 +148,14 @@ const SettingsScreen = props => {
 
             <View style={{ marginTop: 20 }}>
                 {
-                    showSuccessMessage && <Text>Saved!</Text>
+                    showSuccessMessage && <Text>Zapisano!</Text>
                 }
 
                 {
                     isLoading ?
                         <ActivityIndicator size={'small'} color={colors.primary} style={{ marginTop: 10 }} /> :
                         hasChanges() && <SubmitButton
-                            title="Save"
+                            title="Zapisz"
                             onPress={saveHandler}
                             style={{ marginTop: 20 }}
                             disabled={!formState.formIsValid} />
@@ -164,13 +164,13 @@ const SettingsScreen = props => {
 
             <DataItem
                 type={"link"}
-                title="Starred messages"
+                title="Wiadomości oznaczone gwiazdką"
                 hideImage={true}
-                onPress={() => props.navigation.navigate("DataList", { title: "Starred messages", data: sortedStarredMessages, type: "messages" })}
+                onPress={() => props.navigation.navigate("DataList", { title: "Wiadomości oznaczone gwiazdką", data: sortedStarredMessages, type: "messages" })}
             />
 
             <SubmitButton
-                title="Logout"
+                title="Wyloguj się"
                 onPress={() => dispatch(userLogout(userData))}
                 style={{ marginTop: 20 }}
                 color={colors.red} />

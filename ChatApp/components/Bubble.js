@@ -138,9 +138,9 @@ const Bubble = props => {
                         <MenuTrigger />
 
                         <MenuOptions>
-                            <MenuItem text='Copy to clipboard' icon={'copy'} onSelect={() => copyToClipboard(text)} />
-                            <MenuItem text={`${isStarred ? 'Unstar' : 'Star'} message`} icon={isStarred ? 'star-o' : 'star'} iconPack={FontAwesome} onSelect={() => starMessage(messageId, chatId, userId)} />
-                            <MenuItem text='Reply' icon='arrow-left-circle' onSelect={setReply} />
+                            <MenuItem text='Skopiuj do schowka' icon={'copy'} onSelect={() => copyToClipboard(text)} />
+                            <MenuItem text={`${isStarred ? 'Usuń gwiazde' : 'Gwiazda'} wiadomość`} icon={isStarred ? 'star-o' : 'star'} iconPack={FontAwesome} onSelect={() => starMessage(messageId, chatId, userId)} />
+                            <MenuItem text='Odpowiedź' icon='arrow-left-circle' onSelect={setReply} />
 
                         </MenuOptions>
                     </Menu>

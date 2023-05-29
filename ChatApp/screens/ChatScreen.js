@@ -81,7 +81,7 @@ const ChatScreen = (props) => {
                     {
                         chatId &&
                         <Item
-                            title="Chat settings"
+                            title="Czat ustawienia"
                             iconName="settings-outline"
                             onPress={() => chatData.isGroupChat ?
                                 props.navigation.navigate("ChatSettings", { chatId }) :
@@ -174,7 +174,7 @@ const ChatScreen = (props) => {
                 <PageContainer style={{ backgroundColor: 'transparent' }}>
 
                     {
-                        !chatId && <Bubble text='This is a new chat. Say hi!' type="system" />
+                        !chatId && <Bubble text='To jest nowy czat.' type="system" />
                     }
 
                     {
@@ -272,13 +272,13 @@ const ChatScreen = (props) => {
 
                 <AwesomeAlert
                     show={tempImageUri !== ""}
-                    title='Send image?'
+                    title='Wysłać obraz?'
                     closeOnTouchOutside={true}
                     closeOnHardwareBackPress={false}
                     showCancelButton={true}
                     showConfirmButton={true}
-                    cancelText='Cancel'
-                    confirmText="Send image"
+                    cancelText='Analuj'
+                    confirmText="Wyślij"
                     confirmButtonColor={colors.primary}
                     cancelButtonColor={colors.red}
                     titleStyle={styles.popupTitleStyle}

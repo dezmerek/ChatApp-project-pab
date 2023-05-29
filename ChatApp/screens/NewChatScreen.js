@@ -40,7 +40,7 @@ const NewChatScreen = props => {
             headerLeft: () => {
                 return <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                     <Item
-                        title="Close"
+                        title="Zamknij"
                         onPress={() => props.navigation.goBack()} />
                 </HeaderButtons>
             },
@@ -49,7 +49,7 @@ const NewChatScreen = props => {
                     {
                         isGroupChat &&
                         <Item
-                            title={isNewChat ? "Create" : "Add"}
+                            title={isNewChat ? "Stwórz" : "Dodaj"}
                             disabled={isGroupChatDisabled}
                             color={isGroupChatDisabled ? colors.lightGrey : undefined}
                             onPress={() => {
@@ -63,7 +63,7 @@ const NewChatScreen = props => {
                     }
                 </HeaderButtons>
             },
-            headerTitle: isGroupChat ? "Add participants" : "New chat"
+            headerTitle: isGroupChat ? "Dodaj uczestników" : "Nowy czat"
         })
     }, [chatName, selectedUsers]);
 
@@ -120,7 +120,7 @@ const NewChatScreen = props => {
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.textbox}
-                        placeholder="Enter a name for your chat"
+                        placeholder="Wpisz nazwę czatu"
                         autoCorrect={false}
                         autoComplete={false}
                         onChangeText={text => setChatName(text)}
@@ -145,6 +145,7 @@ const NewChatScreen = props => {
                             selectedUsersFlatList.current.scrollToEnd();
                         }
                     }}
+
                     renderItem={itemData => {
                         const userId = itemData.item;
                         const userData = storedUsers[userId];
@@ -165,7 +166,7 @@ const NewChatScreen = props => {
             <FontAwesome name="search" size={15} color={colors.lightGrey} />
 
             <TextInput
-                placeholder='Search'
+                placeholder='Szukaj'
                 style={styles.searchBox}
                 onChangeText={(text) => setSearchTerm(text)}
             />
@@ -210,7 +211,7 @@ const NewChatScreen = props => {
                         size={55}
                         color={colors.lightGrey}
                         style={styles.noResultsIcon} />
-                    <Text style={styles.noResultsText}>No users found!</Text>
+                    <Text style={styles.noResultsText}>Nie znaleziono użytkowników!</Text>
                 </View>
             )
         }
@@ -223,7 +224,7 @@ const NewChatScreen = props => {
                         size={55}
                         color={colors.lightGrey}
                         style={styles.noResultsIcon} />
-                    <Text style={styles.noResultsText}>Enter a name to search for a user!</Text>
+                    <Text style={styles.noResultsText}>Wprowadź nazwę, aby wyszukać użytkownika!</Text>
                 </View>
             )
         }

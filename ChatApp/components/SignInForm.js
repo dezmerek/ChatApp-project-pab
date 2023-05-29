@@ -38,7 +38,7 @@ const SignInForm = props => {
 
     useEffect(() => {
         if (error) {
-            Alert.alert("Wystąpił błąd", error, [{ text: "Ok" }]);
+            Alert.alert("An error occured", error, [{ text: "Okay" }]);
         }
     }, [error])
 

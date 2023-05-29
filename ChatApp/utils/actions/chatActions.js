@@ -41,7 +41,7 @@ export const sendImage = async (chatId, senderData, imageUrl, replyTo, chatUsers
     await sendMessage(chatId, senderData.userId, 'Image', imageUrl, replyTo, null);
 
     const otherUsers = chatUsers.filter(uid => uid !== senderData.userId);
-    await sendPushNotificationForUsers(otherUsers, `${senderData.firstName} ${senderData.lastName}`, `${senderData.firstName} sent an image`, chatId);
+    await sendPushNotificationForUsers(otherUsers, `${senderData.firstName} ${senderData.lastName}`, `${senderData.firstName} wysłał obraz`, chatId);
 }
 
 export const updateChatData = async (chatId, userId, chatData) => {
@@ -133,8 +133,8 @@ export const removeUserFromChat = async (userLoggedInData, userToRemoveData, cha
     }
 
     const messageText = userLoggedInData.userId === userToRemoveData.userId ?
-        `${userLoggedInData.firstName} left the chat` :
-        `${userLoggedInData.firstName} removed ${userToRemoveData.firstName} from the chat`;
+        `${userLoggedInData.firstName} opuścił czat` :
+        `${userLoggedInData.firstName} usunięto ${userToRemoveData.firstName} z czatu`;
 
     await sendInfoMessage(chatData.key, userLoggedInData.userId, messageText);
 }
@@ -163,8 +163,8 @@ export const addUsersToChat = async (userLoggedInData, usersToAddData, chatData)
 
     await updateChatData(chatData.key, userLoggedInData.userId, { users: existingUsers.concat(newUsers) })
 
-    const moreUsersMessage = newUsers.length > 1 ? `and ${newUsers.length - 1} others ` : '';
-    const messageText = `${userLoggedInData.firstName} ${userLoggedInData.lastName} added ${userAddedName} ${moreUsersMessage}to the chat`;
+    const moreUsersMessage = newUsers.length > 1 ? `i ${newUsers.length - 1} inni ` : '';
+    const messageText = `${userLoggedInData.firstName} ${userLoggedInData.lastName} dodano ${userAddedName} ${moreUsersMessage}do czatu`;
     await sendInfoMessage(chatData.key, userLoggedInData.userId, messageText);
 
 }

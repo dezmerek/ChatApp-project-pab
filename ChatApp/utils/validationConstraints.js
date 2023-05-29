@@ -31,7 +31,7 @@ export const validateString = (id, value) => {
         constraints.format = {
             pattern: "[a-z]+",
             flags: "i",
-            message: "może zawierać tylko litery"
+            message: "value can only contain letters"
         }
     }
 
@@ -62,7 +62,7 @@ export const validatePassword = (id, value) => {
     if (value !== "") {
         constraints.length = {
             minimum: 6,
-            message: "musi mieć co najmniej 6 znaków"
+            message: "must be at least 6 characters"
         }
     }
 

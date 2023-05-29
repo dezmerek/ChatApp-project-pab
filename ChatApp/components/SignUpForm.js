@@ -41,7 +41,7 @@ const SignUpForm = props => {
 
     useEffect(() => {
         if (error) {
-            Alert.alert("Wystąpił błąd", error, [{ text: "Ok" }]);
+            Alert.alert("An error occured", error, [{ text: "Okay" }]);
         }
     }, [error])
 
@@ -107,7 +107,7 @@ const SignUpForm = props => {
                 isLoading ?
                     <ActivityIndicator size={'small'} color={colors.primary} style={{ marginTop: 10 }} /> :
                     <SubmitButton
-                        title="Stwórz konto"
+                        title="Sign up"
                         onPress={authHandler}
                         style={{ marginTop: 20 }}
                         disabled={!formState.formIsValid} />

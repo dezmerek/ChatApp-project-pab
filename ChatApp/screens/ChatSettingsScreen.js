@@ -101,7 +101,7 @@ const ChatSettingsScreen = props => {
     if (!chatData.users) return null;
 
     return <PageContainer>
-        <PageTitle text="Chat Settings" />
+        <PageTitle text="Ustawienia czatu" />
 
         <ScrollView contentContainerStyle={styles.scrollView}>
             <ProfileImage
@@ -109,12 +109,12 @@ const ChatSettingsScreen = props => {
                 size={80}
                 chatId={chatId}
                 userId={userData.userId}
-                uri={chatData.chatImage}
+                uri={chatData.profileImageUri}
             />
 
             <Input
                 id="chatName"
-                label="Chat name"
+                label="Nazwa czatu"
                 autoCapitalize="none"
                 initialValue={chatData.chatName}
                 allowEmpty={false}
@@ -124,10 +124,10 @@ const ChatSettingsScreen = props => {
 
 
             <View style={styles.sectionContainer}>
-                <Text style={styles.heading}>{chatData.users.length} Participants</Text>
+                <Text style={styles.heading}>{chatData.users.length} Uczestnicy</Text>
 
                 <DataItem
-                    title="Add users"
+                    title="Dodaj użytkowników"
                     icon="plus"
                     type="button"
                     onPress={() => props.navigation.navigate("NewChat", { isGroupChat: true, existingUsers: chatData.users, chatId })}
@@ -151,7 +151,7 @@ const ChatSettingsScreen = props => {
                     chatData.users.length > 4 &&
                     <DataItem
                         type={"link"}
-                        title="View all"
+                        title="Pokaż wszystkie"
                         hideImage={true}
                         onPress={() => props.navigation.navigate("DataList", { title: "Participants", data: chatData.users, type: "users", chatId })}
                     />
@@ -160,13 +160,13 @@ const ChatSettingsScreen = props => {
 
 
 
-            {showSuccessMessage && <Text>Saved!</Text>}
+            {showSuccessMessage && <Text>Zapisano!</Text>}
 
             {
                 isLoading ?
                     <ActivityIndicator size={'small'} color={colors.primary} /> :
                     hasChanges() && <SubmitButton
-                        title="Save changes"
+                        title="Zapisz zmiany"
                         color={colors.primary}
                         onPress={saveHandler}
                         disabled={!formState.formIsValid}
@@ -175,7 +175,7 @@ const ChatSettingsScreen = props => {
 
             <DataItem
                 type={"link"}
-                title="Starred messages"
+                title="Wiadomości oznaczone gwiazdką"
                 hideImage={true}
                 onPress={() => props.navigation.navigate("DataList", { title: "Starred messages", data: Object.values(starredMessages), type: "messages" })}
             />
@@ -184,7 +184,7 @@ const ChatSettingsScreen = props => {
 
         {
             <SubmitButton
-                title="Leave chat"
+                title="Opuść czat"
                 color={colors.red}
                 onPress={() => leaveChat()}
                 style={{ marginBottom: 20 }}
