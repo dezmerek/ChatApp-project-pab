@@ -60,7 +60,7 @@ const ChatScreen = (props) => {
                     <PageContainer style={{ backgroundColor: 'transparent' }}>
 
                         {
-                            !chatId && <Bubble text='This is a new chat.' />
+                            !chatId && <Bubble text='This is a new chat.' type="system" />
                         }
 
 
