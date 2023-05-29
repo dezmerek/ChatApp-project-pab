@@ -68,7 +68,7 @@ const ContactScreen = props => {
         {
             commonChats.length > 0 &&
             <>
-                <Text style={styles.heading}>{commonChats.length} {commonChats.length === 1 ? "Group" : "Groups"} in Common</Text>
+                <Text style={styles.heading}>{commonChats.length} {commonChats.length === 1 ? "Grupa" : "Grupy"} wspólnie</Text>
                 {
                     commonChats.map(cid => {
                         const chatData = storedChats[cid];
@@ -91,7 +91,7 @@ const ContactScreen = props => {
                 isLoading ?
                     <ActivityIndicator size='small' color={colors.primary} /> :
                     <SubmitButton
-                        title="Remove from chat"
+                        title="Usuń z czatu"
                         color={colors.red}
                         onPress={removeFromChat}
                     />
