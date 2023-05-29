@@ -36,7 +36,7 @@ const NewChatScreen = props => {
             headerLeft: () => {
                 return <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                     <Item
-                        title="Close"
+                        title="Zamknij"
                         onPress={() => props.navigation.goBack()} />
                 </HeaderButtons>
             },
@@ -45,7 +45,7 @@ const NewChatScreen = props => {
                     {
                         isGroupChat &&
                         <Item
-                            title="Create"
+                            title="Stwórz"
                             disabled={isGroupChatDisabled}
                             color={isGroupChatDisabled ? colors.lightGrey : undefined}
                             onPress={() => {
@@ -57,7 +57,7 @@ const NewChatScreen = props => {
                     }
                 </HeaderButtons>
             },
-            headerTitle: isGroupChat ? "Add participants" : "New chat"
+            headerTitle: isGroupChat ? "Dodaj uczestników" : "Nowy czat"
         })
     }, [chatName, selectedUsers]);
 

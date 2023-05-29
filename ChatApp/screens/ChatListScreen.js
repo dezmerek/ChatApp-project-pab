@@ -28,7 +28,7 @@ const ChatListScreen = props => {
             headerRight: () => {
                 return <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                     <Item
-                        title="New chat"
+                        title="Nowy czat"
                         iconName="create-outline"
                         onPress={() => props.navigation.navigate("NewChat")} />
                 </HeaderButtons>
@@ -79,7 +79,7 @@ const ChatListScreen = props => {
 
         <View>
             <TouchableOpacity onPress={() => props.navigation.navigate("NewChat", { isGroupChat: true })}>
-                <Text style={styles.newGroupText}>New Group</Text>
+                <Text style={styles.newGroupText}>Nowa grupa</Text>
             </TouchableOpacity>
         </View>
 
@@ -88,15 +88,24 @@ const ChatListScreen = props => {
             renderItem={(itemData) => {
                 const chatData = itemData.item;
                 const chatId = chatData.key;
+                const isGroupChat = chatData.isGroupChat;
 
-                const otherUserId = chatData.users.find(uid => uid !== userData.userId);
-                const otherUser = storedUsers[otherUserId];
+                let title = "";
+                const subTitle = chatData.latestMessageText || "Nowy czat";
+                let image = "";
 
-                if (!otherUser) return;
+                if (isGroupChat) {
+                    title = chatData.chatName;
+                }
+                else {
+                    const otherUserId = chatData.users.find(uid => uid !== userData.userId);
+                    const otherUser = storedUsers[otherUserId];
 
-                const title = `${otherUser.firstName} ${otherUser.lastName}`;
-                const subTitle = chatData.latestMessageText || "New chat";
-                const image = otherUser.profilePicture;
+                    if (!otherUser) return;
+
+                    title = `${otherUser.firstName} ${otherUser.lastName}`;
+                    image = otherUser.profilePicture;
+                }
 
                 return <DataItem
                     title={title}
