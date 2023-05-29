@@ -218,13 +218,13 @@ const ChatScreen = (props) => {
 
                     <AwesomeAlert
                         show={tempImageUri !== ""}
-                        title='Send image?'
+                        title='Wysłać obraz?'
                         closeOnTouchOutside={true}
                         closeOnHardwareBackPress={false}
                         showCancelButton={true}
                         showConfirmButton={true}
-                        cancelText='Cancel'
-                        confirmText="Send image"
+                        cancelText='Analuj'
+                        confirmText="Wyślij obraz"
                         confirmButtonColor={colors.primary}
                         cancelButtonColor={colors.red}
                         titleStyle={styles.popupTitleStyle}
