@@ -120,13 +120,17 @@ const NewChatScreen = props => {
                         style={styles.selectedUsersList}
                         data={selectedUsers}
                         horizontal={true}
+                        keyExtractor={item => item}
+                        contentContainerStyle={{ alignItems: 'center' }}
                         renderItem={itemData => {
                             const userId = itemData.item;
                             const userData = storedUsers[userId];
                             return <ProfileImage
+                                style={styles.selectedUserStyle}
                                 size={40}
                                 uri={userData.profilePicture}
                                 onPress={() => userPressed(userId)}
+                                showRemoveButton={true}
                             />
                         }}
                     />
@@ -241,6 +245,18 @@ const styles = StyleSheet.create({
         width: '100%',
         fontFamily: 'regular',
         letterSpacing: 0.3
+    },
+    selectedUsersContainer: {
+        height: 50,
+        justifyContent: 'center'
+    },
+    selectedUsersList: {
+        height: '100%',
+        paddingTop: 10
+    },
+    selectedUserStyle: {
+        marginRight: 10,
+        marginBottom: 10
     }
 })
 
