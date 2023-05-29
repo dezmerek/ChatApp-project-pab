@@ -126,6 +126,7 @@ const NewChatScreen = props => {
                             return <ProfileImage
                                 size={40}
                                 uri={userData.profilePicture}
+                                onPress={() => userPressed(userId)}
                             />
                         }}
                     />
