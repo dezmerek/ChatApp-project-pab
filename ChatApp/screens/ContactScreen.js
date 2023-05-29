@@ -46,7 +46,7 @@ const ContactScreen = props => {
         {
             commonChats.length > 0 &&
             <>
-                <Text style={styles.heading}>{commonChats.length} {commonChats.length === 1 ? "Grupa" : "Grupy"} wspólne</Text>
+                <Text style={styles.heading}>{commonChats.length} {commonChats.length === 1 ? "Group" : "Groups"} in Common</Text>
                 {
                     commonChats.map(cid => {
                         const chatData = storedChats[cid];
@@ -56,6 +56,7 @@ const ContactScreen = props => {
                             subTitle={chatData.latestMessageText}
                             type="link"
                             onPress={() => props.navigation.push("ChatScreen", { chatId: cid })}
+                            image={chatData.chatImage}
                         />
                     })
                 }
