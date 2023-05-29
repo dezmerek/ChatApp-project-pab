@@ -177,7 +177,7 @@ const ChatSettingsScreen = props => {
                 type={"link"}
                 title="Wiadomości oznaczone gwiazdką"
                 hideImage={true}
-                onPress={() => props.navigation.navigate("DataList", { title: "Starred messages", data: Object.values(starredMessages), type: "messages" })}
+                onPress={() => props.navigation.navigate("DataList", { title: "Wiadomości oznaczone gwiazdką", data: Object.values(starredMessages), type: "messages" })}
             />
 
         </ScrollView>
