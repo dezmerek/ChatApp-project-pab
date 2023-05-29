@@ -5,6 +5,7 @@ import { Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-m
 import uuid from 'react-native-uuid';
 import * as Clipboard from 'expo-clipboard';
 import { Feather, FontAwesome } from '@expo/vector-icons';
+import { starMessage } from '../utils/actions/chatActions';
 
 const MenuItem = props => {
 
@@ -19,7 +20,7 @@ const MenuItem = props => {
 }
 
 const Bubble = props => {
-    const { text, type } = props;
+    const { text, type, messageId, chatId, userId } = props;
 
     const bubbleStyle = { ...styles.container };
     const textStyle = { ...styles.text };
@@ -79,7 +80,7 @@ const Bubble = props => {
 
                         <MenuOptions>
                             <MenuItem text='Skopiuj do schowka' icon={'copy'} onSelect={() => copyToClipboard(text)} />
-                            <MenuItem text='Oznacz wiadomość' icon={'star-o'} iconPack={FontAwesome} onSelect={() => copyToClipboard(text)} />
+                            <MenuItem text='Oznacz gwiazdą' icon={'star-o'} iconPack={FontAwesome} onSelect={() => starMessage(messageId, chatId, userId)} />
 
                         </MenuOptions>
                     </Menu>
