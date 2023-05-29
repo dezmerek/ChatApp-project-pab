@@ -21,6 +21,7 @@ import { setStoredUsers } from "../store/userSlice";
 import { setChatMessages, setStarredMessages } from "../store/messagesSlice";
 import ContactScreen from "../screens/ContactScreen";
 import DataListScreen from "../screens/DataListScreen";
+import { StackActions, useNavigation } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -112,6 +113,7 @@ const StackNavigator = () => {
 const MainNavigator = (props) => {
 
     const dispatch = useDispatch();
+    const navigation = useNavigation();
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -131,8 +133,16 @@ const MainNavigator = (props) => {
         });
 
         responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-            console.log("Notification tapped:");
-            console.log(response);
+            const { data } = response.notification.request.content;
+            const chatId = data["chatId"];
+
+            if (chatId) {
+                const pushAction = StackActions.push("ChatScreen", { chatId });
+                navigation.dispatch(pushAction);
+            }
+            else {
+                console.log("No chat id sent with notification");
+            }
         });
 
         return () => {

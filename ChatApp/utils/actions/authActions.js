@@ -88,7 +88,11 @@ export const signIn = (email, password) => {
 export const userLogout = (userData) => {
     return async dispatch => {
 
-        await removePushToken(userData);
+        try {
+            await removePushToken(userData);
+        } catch (error) {
+            console.log(error)
+        }
 
         AsyncStorage.clear();
         clearTimeout(timer);
