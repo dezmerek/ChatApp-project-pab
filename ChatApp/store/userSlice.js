@@ -1,15 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const chatSlice = createSlice({
-    name: "chats",
+const userSlice = createSlice({
+    name: "users",
     initialState: {
-        chatsData: {}
+        storedUsers: {}
     },
     reducers: {
-        setChatsData: (state, action) => {
-            state.chatsData = action.payload.chatsData;
+        setStoredUsers: (state, action) => {
+            const newUsers = action.payload.newUsers;
+            console.log(newUsers);
+            const existingUsers = state.storedUsers;
+
+            const userArray = Object.values(newUsers);
+            for (let i = 0; i < userArray.length; i++) {
+                const userData = userArray[i];
+                existingUsers[userData.userId] = userData;
+            }
+
+            state.storedUsers = existingUsers;
         }
     }
 });
-export const setChatsData = chatSlice.actions.setChatsData;
-export default chatSlice.reducer;
+export const setStoredUsers = userSlice.actions.setStoredUsers;
+export default userSlice.reducer;

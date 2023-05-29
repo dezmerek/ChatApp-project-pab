@@ -16,7 +16,6 @@ import { ActivityIndicator, View } from "react-native";
 import colors from "../constants/colors";
 import commonStyles from "../constants/commonStyles";
 import { setStoredUsers } from "../store/userSlice";
-import { setChatMessages } from "../store/messagesSlice";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -65,7 +64,7 @@ const StackNavigator = () => {
                     component={ChatScreen}
                     options={{
                         headerTitle: "",
-                        headerBackTitle: "Wróc",
+                        headerBackTitle: "Wróć",
                     }}
                 />
                 <Stack.Screen
@@ -73,7 +72,7 @@ const StackNavigator = () => {
                     component={ChatSettingsScreen}
                     options={{
                         headerTitle: "Ustawienia",
-                        headerBackTitle: "Wróc",
+                        headerBackTitle: "Wróć",
                     }}
                 />
             </Stack.Group>
@@ -146,14 +145,6 @@ const MainNavigator = (props) => {
                         dispatch(setChatsData({ chatsData }));
                         setIsLoading(false);
                     }
-                })
-
-                const messagesRef = child(dbRef, `messages/${chatId}`);
-                refs.push(messagesRef);
-
-                onValue(messagesRef, messagesSnapshot => {
-                    const messagesData = messagesSnapshot.val();
-                    dispatch(setChatMessages({ chatId, messagesData }));
                 })
 
                 if (chatsFoundCount == 0) {
