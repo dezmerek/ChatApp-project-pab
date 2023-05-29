@@ -83,7 +83,9 @@ const ChatScreen = (props) => {
                         <Item
                             title="Chat settings"
                             iconName="settings-outline"
-                            onPress={() => { }}
+                            onPress={() => chatData.isGroupChat ?
+                                props.navigation.navigate("") :
+                                props.navigation.navigate("Contact")}
                         />
                     }
                 </HeaderButtons>
