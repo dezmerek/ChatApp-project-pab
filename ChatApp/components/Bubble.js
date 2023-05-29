@@ -6,6 +6,7 @@ import uuid from 'react-native-uuid';
 import * as Clipboard from 'expo-clipboard';
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import { starMessage } from '../utils/actions/chatActions';
+import { useSelector } from 'react-redux';
 
 const MenuItem = props => {
 
@@ -21,6 +22,8 @@ const MenuItem = props => {
 
 const Bubble = props => {
     const { text, type, messageId, chatId, userId } = props;
+
+    const starredMessages = useSelector(state => state.messages.starredMessages[chatId] ?? {});
 
     const bubbleStyle = { ...styles.container };
     const textStyle = { ...styles.text };
