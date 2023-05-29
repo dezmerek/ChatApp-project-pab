@@ -3,6 +3,9 @@ import { View, Text, StyleSheet, Button, FlatList } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useSelector } from 'react-redux';
 import CustomHeaderButton from '../components/CustomHeaderButton';
+import DataItem from '../components/DataItem';
+import PageContainer from '../components/PageContainer';
+import PageTitle from '../components/PageTitle';
 
 const ChatListScreen = props => {
 
@@ -12,10 +15,10 @@ const ChatListScreen = props => {
     const storedUsers = useSelector(state => state.users.storedUsers);
     const userChats = useSelector(state => {
         const chatsData = state.chats.chatsData;
-        return Object.values(chatsData);
+        return Object.values(chatsData).sort((a, b) => {
+            return new Date(b.updatedAt) - new Date(a.updatedAt);
+        });
     });
-
-    console.log(storedUsers);
 
     useEffect(() => {
         props.navigation.setOptions({
@@ -46,17 +49,32 @@ const ChatListScreen = props => {
 
     }, [props.route?.params])
 
-    return <FlatList
-        data={userChats}
-        renderItem={(itemData) => {
-            const chatData = itemData.item;
+    return <PageContainer>
 
-            const otherUserId = chatData.users.find(uid => uid !== userData.userId);
+        <PageTitle text="Czaty" />
 
+        <FlatList
+            data={userChats}
+            renderItem={(itemData) => {
+                const chatData = itemData.item;
 
-            return <Text>{otherUserId}</Text>
-        }}
-    />
+                const otherUserId = chatData.users.find(uid => uid !== userData.userId);
+                const otherUser = storedUsers[otherUserId];
+
+                if (!otherUser) return;
+
+                const title = `${otherUser.firstName} ${otherUser.lastName}`;
+                const subTitle = "To będzie wiadomość.."
+                const image = otherUser.profilePicture;
+
+                return <DataItem
+                    title={title}
+                    subTitle={subTitle}
+                    image={image}
+                />
+            }}
+        />
+    </PageContainer>
 };
 
 const styles = StyleSheet.create({
