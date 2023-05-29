@@ -9,6 +9,7 @@ const ChatSettingsScreen = props => {
 
     const chatId = props.route.params.chatId;
     const chatData = useSelector(state => state.chats.chatsData[chatId]);
+    const userData = useSelector(state => state.auth.userData);
 
     return <PageContainer>
         <PageTitle text="Chat Settings" />
@@ -17,6 +18,9 @@ const ChatSettingsScreen = props => {
             <ProfileImage
                 showEditButton={true}
                 size={80}
+                chatId={chatId}
+                userId={userData.userId}
+                uri={chatData.chatImage}
             />
 
             <Text>{chatData.chatName}</Text>
