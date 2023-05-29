@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
+import Input from '../components/Input';
 import PageContainer from '../components/PageContainer';
 import PageTitle from '../components/PageTitle';
 import ProfileImage from '../components/ProfileImage';
@@ -20,10 +21,16 @@ const ChatSettingsScreen = props => {
                 size={80}
                 chatId={chatId}
                 userId={userData.userId}
-                uri={chatData.chatImage}
+                uri={chatData.profileImageUri}
             />
 
-            <Text>{chatData.chatName}</Text>
+            <Input
+                id="chatName"
+                label="Chat name"
+                autoCapitalize="none"
+                initialValue={chatData.chatName}
+                allowEmpty={false}
+            />
 
         </ScrollView>
     </PageContainer>
