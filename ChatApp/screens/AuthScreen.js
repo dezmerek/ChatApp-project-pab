@@ -39,7 +39,7 @@ const AuthScreen = props => {
                     <TouchableOpacity
                         onPress={() => setIsSignUp(prevState => !prevState)}
                         style={styles.linkContainer}>
-                        <Text style={styles.link}>{`Przełącz na ${isSignUp ? "logowanie" : "stworzenie konta"}`}</Text>
+                        <Text style={styles.link}>{` ${isSignUp ? "Masz już konto? Zaloguj się!" : "Nie posiadasz konta? Kliknij aby założyć!"}`}</Text>
                     </TouchableOpacity>
 
                 </KeyboardAvoidingView>
