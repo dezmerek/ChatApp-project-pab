@@ -28,7 +28,7 @@ const ChatListScreen = props => {
             headerRight: () => {
                 return <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                     <Item
-                        title="Nowy czat"
+                        title="New chat"
                         iconName="create-outline"
                         onPress={() => props.navigation.navigate("NewChat")} />
                 </HeaderButtons>
@@ -42,18 +42,32 @@ const ChatListScreen = props => {
             return;
         }
 
-        const chatUsers = selectedUserList || [selectedUser];
-        if (!chatUsers.includes(userData.userId)) {
-            chatUsers.push(userData.userId);
+        let chatData;
+        let navigationProps;
+
+        if (selectedUser) {
+            chatData = userChats.find(cd => !cd.isGroupChat && cd.users.includes(selectedUser))
         }
 
-        const navigationProps = {
-            newChatData: {
-                users: chatUsers,
-                isGroupChat: selectedUserList !== undefined,
-                chatName
+        if (chatData) {
+            navigationProps = { chatId: chatData.key }
+        }
+        else {
+            const chatUsers = selectedUserList || [selectedUser];
+            if (!chatUsers.includes(userData.userId)) {
+                chatUsers.push(userData.userId);
+            }
+
+            navigationProps = {
+                newChatData: {
+                    users: chatUsers,
+                    isGroupChat: selectedUserList !== undefined,
+                    chatName
+                }
             }
         }
+
+
 
         props.navigation.navigate("ChatScreen", navigationProps);
 
@@ -61,11 +75,11 @@ const ChatListScreen = props => {
 
     return <PageContainer>
 
-        <PageTitle text="Czaty" />
+        <PageTitle text="Chats" />
 
         <View>
             <TouchableOpacity onPress={() => props.navigation.navigate("NewChat", { isGroupChat: true })}>
-                <Text style={styles.newGroupText}>Nowa Grupa</Text>
+                <Text style={styles.newGroupText}>New Group</Text>
             </TouchableOpacity>
         </View>
 
@@ -81,7 +95,7 @@ const ChatListScreen = props => {
                 if (!otherUser) return;
 
                 const title = `${otherUser.firstName} ${otherUser.lastName}`;
-                const subTitle = chatData.latestMessageText || "Nowy czat";
+                const subTitle = chatData.latestMessageText || "New chat";
                 const image = otherUser.profilePicture;
 
                 return <DataItem
