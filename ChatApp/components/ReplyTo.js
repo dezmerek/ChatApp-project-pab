@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import colors from '../constants/colors';
+import { AntDesign } from '@expo/vector-icons';
 
 const ReplyTo = props => {
     const { text, user, onCancel } = props;
@@ -11,8 +12,12 @@ const ReplyTo = props => {
 
             <Text numberOfLines={1} style={styles.name}>{name}</Text>
             <Text numberOfLines={1}>{text}</Text>
-
         </View>
+
+        <TouchableOpacity onPress={onCancel}>
+            <AntDesign name="closecircleo" size={24} color={colors.blue} />
+        </TouchableOpacity>
+
     </View>
 }
 

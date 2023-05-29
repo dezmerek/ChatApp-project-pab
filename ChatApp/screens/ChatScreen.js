@@ -20,6 +20,7 @@ import { useSelector } from "react-redux";
 import PageContainer from "../components/PageContainer";
 import Bubble from "../components/Bubble";
 import { createChat, sendTextMessage } from "../utils/actions/chatActions";
+import ReplyTo from "../components/ReplyTo";
 
 const ChatScreen = (props) => {
     const [chatUsers, setChatUsers] = useState([]);
@@ -137,9 +138,10 @@ const ChatScreen = (props) => {
 
                     {
                         replyingTo &&
-                        <Text text={
-                            replyingTo.text}
+                        <ReplyTo
+                            text={replyingTo.text}
                             user={storedUsers[replyingTo.sentBy]}
+                            onCancel={() => setReplyingTo(null)}
                         />
                     }
 
