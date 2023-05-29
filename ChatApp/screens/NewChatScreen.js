@@ -56,7 +56,8 @@ const NewChatScreen = props => {
                                 const screenName = isNewChat ? "ChatList" : "ChatSettings";
                                 props.navigation.navigate(screenName, {
                                     selectedUsers,
-                                    chatName
+                                    chatName,
+                                    chatId
                                 })
                             }} />
                     }

@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useState } from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { useSelector } from 'react-redux';
 import DataItem from '../components/DataItem';
@@ -29,6 +29,28 @@ const ChatSettingsScreen = props => {
     }
 
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
+
+    const selectedUsers = props.route.params && props.route.params.selectedUsers;
+    useEffect(() => {
+        if (!selectedUsers) {
+            return;
+        }
+
+        const selectedUserData = [];
+        selectedUsers.forEach(uid => {
+            if (uid === userData.userId) return;
+
+            if (!storedUsers[uid]) {
+                console.log("No user data found in the data store");
+                return;
+            }
+
+            selectedUserData.push(storedUsers[uid]);
+        });
+
+        console.log(selectedUserData);
+
+    }, [selectedUsers]);
 
     const inputChangedHandler = useCallback((inputId, inputValue) => {
         const result = validateInput(inputId, inputValue);
