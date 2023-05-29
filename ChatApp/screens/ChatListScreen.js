@@ -11,6 +11,8 @@ import colors from '../constants/colors';
 const ChatListScreen = props => {
 
     const selectedUser = props.route?.params?.selectedUserId;
+    const selectedUserList = props.route?.params?.selectedUsers;
+    const chatName = props.route?.params?.chatName;
 
     const userData = useSelector(state => state.auth.userData);
     const storedUsers = useSelector(state => state.users.storedUsers);
@@ -36,14 +38,21 @@ const ChatListScreen = props => {
 
     useEffect(() => {
 
-        if (!selectedUser) {
+        if (!selectedUser && !selectedUserList) {
             return;
         }
 
-        const chatUsers = [selectedUser, userData.userId];
+        const chatUsers = selectedUserList || [selectedUser];
+        if (!chatUsers.includes(userData.userId)) {
+            chatUsers.push(userData.userId);
+        }
 
         const navigationProps = {
-            newChatData: { users: chatUsers }
+            newChatData: {
+                users: chatUsers,
+                isGroupChat: selectedUserList !== undefined,
+                chatName
+            }
         }
 
         props.navigation.navigate("ChatScreen", navigationProps);
@@ -55,7 +64,7 @@ const ChatListScreen = props => {
         <PageTitle text="Czaty" />
 
         <View>
-            <TouchableOpacity onPress={() => props.navigation.navigate("NewChat", { isGroupChat: true })} >
+            <TouchableOpacity onPress={() => props.navigation.navigate("NewChat", { isGroupChat: true })}>
                 <Text style={styles.newGroupText}>Nowa Grupa</Text>
             </TouchableOpacity>
         </View>
@@ -72,7 +81,7 @@ const ChatListScreen = props => {
                 if (!otherUser) return;
 
                 const title = `${otherUser.firstName} ${otherUser.lastName}`;
-                const subTitle = chatData.latestMessageText || "Nowy czat"
+                const subTitle = chatData.latestMessageText || "Nowy czat";
                 const image = otherUser.profilePicture;
 
                 return <DataItem

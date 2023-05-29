@@ -36,7 +36,7 @@ const ChatScreen = (props) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const flatList = useRef();
-
+    console.log(chatUsers)
     const userData = useSelector(state => state.auth.userData);
     const storedUsers = useSelector(state => state.users.storedUsers);
     const storedChats = useSelector(state => state.chats.chatsData);
@@ -245,13 +245,13 @@ const ChatScreen = (props) => {
 
                     <AwesomeAlert
                         show={tempImageUri !== ""}
-                        title='Wysłać zdjęcie?'
+                        title='Send image?'
                         closeOnTouchOutside={true}
                         closeOnHardwareBackPress={false}
                         showCancelButton={true}
                         showConfirmButton={true}
-                        cancelText='Analuj'
-                        confirmText="Wyślij zdjęcie"
+                        cancelText='Cancel'
+                        confirmText="Send image"
                         confirmButtonColor={colors.primary}
                         cancelButtonColor={colors.red}
                         titleStyle={styles.popupTitleStyle}
