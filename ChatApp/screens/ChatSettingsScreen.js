@@ -108,7 +108,7 @@ const ChatSettingsScreen = props => {
                 size={80}
                 chatId={chatId}
                 userId={userData.userId}
-                uri={chatData.chatImage}
+                uri={chatData.profileImageUri}
             />
 
             <Input
