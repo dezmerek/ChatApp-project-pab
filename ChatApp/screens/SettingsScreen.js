@@ -1,7 +1,8 @@
 import { Feather, FontAwesome } from '@expo/vector-icons';
-import React, { useCallback, useReducer, useState } from 'react';
+import React, { useCallback, useMemo, useReducer, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import DataItem from '../components/DataItem';
 import Input from '../components/Input';
 import PageContainer from '../components/PageContainer';
 import PageTitle from '../components/PageTitle';
@@ -20,6 +21,20 @@ const SettingsScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const userData = useSelector(state => state.auth.userData);
+    const starredMessages = useSelector(state => state.messages.starredMessages ?? {});
+
+    const sortedStarredMessages = useMemo(() => {
+        let result = [];
+
+        const chats = Object.values(starredMessages);
+
+        chats.forEach(chat => {
+            const chatMessages = Object.values(chat);
+            result = result.concat(chatMessages);
+        })
+
+        return result;
+    }, [starredMessages]);
 
     const firstName = userData.firstName || "";
     const lastName = userData.lastName || "";
@@ -80,7 +95,7 @@ const SettingsScreen = props => {
     }
 
     return <PageContainer>
-        <PageTitle text="Ustawienia" />
+        <PageTitle text="Settings" />
 
         <ScrollView contentContainerStyle={styles.formContainer}>
 
@@ -92,7 +107,7 @@ const SettingsScreen = props => {
 
             <Input
                 id="firstName"
-                label="Imie"
+                label="First name"
                 icon="user-o"
                 iconPack={FontAwesome}
                 onInputChanged={inputChangedHandler}
@@ -102,7 +117,7 @@ const SettingsScreen = props => {
 
             <Input
                 id="lastName"
-                label="Nazwisko"
+                label="Last name"
                 icon="user-o"
                 iconPack={FontAwesome}
                 onInputChanged={inputChangedHandler}
@@ -123,7 +138,7 @@ const SettingsScreen = props => {
 
             <Input
                 id="about"
-                label="O mnie"
+                label="About"
                 icon="user-o"
                 iconPack={FontAwesome}
                 onInputChanged={inputChangedHandler}
@@ -133,23 +148,29 @@ const SettingsScreen = props => {
 
             <View style={{ marginTop: 20 }}>
                 {
-                    showSuccessMessage && <Text>Zapisano zmiany!</Text>
+                    showSuccessMessage && <Text>Saved!</Text>
                 }
 
                 {
                     isLoading ?
                         <ActivityIndicator size={'small'} color={colors.primary} style={{ marginTop: 10 }} /> :
                         hasChanges() && <SubmitButton
-                            title="Zapisz"
+                            title="Save"
                             onPress={saveHandler}
                             style={{ marginTop: 20 }}
                             disabled={!formState.formIsValid} />
                 }
             </View>
 
+            <DataItem
+                type={"link"}
+                title="Starred messages"
+                hideImage={true}
+                onPress={() => props.navigation.navigate("DataList", { title: "Starred messages", data: sortedStarredMessages, type: "messages" })}
+            />
 
             <SubmitButton
-                title="Wyloguj się"
+                title="Logout"
                 onPress={() => dispatch(userLogout())}
                 style={{ marginTop: 20 }}
                 color={colors.red} />
