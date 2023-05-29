@@ -32,7 +32,7 @@ const TabNavigator = () => {
                 name="ChatList"
                 component={ChatListScreen}
                 options={{
-                    tabBarLabel: "Chats",
+                    tabBarLabel: "Czaty",
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="chatbubble-outline" size={size} color={color} />
                     ),
@@ -42,7 +42,7 @@ const TabNavigator = () => {
                 name="Settings"
                 component={SettingsScreen}
                 options={{
-                    tabBarLabel: "Settings",
+                    tabBarLabel: "Ustawienia",
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="settings-outline" size={size} color={color} />
                     ),
@@ -66,23 +66,23 @@ const StackNavigator = () => {
                     component={ChatScreen}
                     options={{
                         headerTitle: "",
-                        headerBackTitle: "Back",
+                        headerBackTitle: "Wróć",
                     }}
                 />
                 <Stack.Screen
                     name="ChatSettings"
                     component={ChatSettingsScreen}
                     options={{
-                        headerTitle: "Settings",
-                        headerBackTitle: "Back",
+                        headerTitle: "Ustawienia",
+                        headerBackTitle: "Wróć",
                     }}
                 />
                 <Stack.Screen
                     name="Contact"
                     component={ContactScreen}
                     options={{
-                        headerTitle: "Contact info",
-                        headerBackTitle: "Back",
+                        headerTitle: "Kontakt info",
+                        headerBackTitle: "Wróć",
                     }}
                 />
             </Stack.Group>
