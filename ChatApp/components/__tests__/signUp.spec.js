@@ -22,5 +22,14 @@ describe('ReplyTo', () => {
     expect(textElement).toBeDefined();
   });
 
- 
+  it('calls onCancel function when cancel button is pressed', () => {
+    const { getByTestId } = render(
+      <ReplyTo text={text} user={user} onCancel={onCancelMock} />
+    );
+
+    const cancelButton = getByTestId('cancel-button');
+    fireEvent.press(cancelButton);
+
+    expect(onCancelMock).toHaveBeenCalled();
+  });
 });
