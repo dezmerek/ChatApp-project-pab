@@ -1,3 +1,5 @@
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
 import { getFirebaseApp } from '../firebaseHelper';
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { child, getDatabase, ref, set, update } from 'firebase/database';
@@ -25,6 +27,7 @@ export const signUp = (firstName, lastName, email, password) => {
 
             dispatch(authenticate({ token: accessToken, userData }));
             saveDataToStorage(accessToken, uid, expiryDate);
+            await storePushToken(userData);
 
             timer = setTimeout(() => {
                 dispatch(userLogout());
@@ -33,10 +36,10 @@ export const signUp = (firstName, lastName, email, password) => {
             console.log(error);
             const errorCode = error.code;
 
-            let message = "Coś poszło nie tak.";
+            let message = "Something went wrong.";
 
             if (errorCode === "auth/email-already-in-use") {
-                message = "Ten email jest już w użyciu";
+                message = "This email is already in use";
             }
 
             throw new Error(message);
@@ -62,6 +65,7 @@ export const signIn = (email, password) => {
 
             dispatch(authenticate({ token: accessToken, userData }));
             saveDataToStorage(accessToken, uid, expiryDate);
+            await storePushToken(userData);
 
             timer = setTimeout(() => {
                 dispatch(userLogout());
@@ -70,10 +74,10 @@ export const signIn = (email, password) => {
         } catch (error) {
             const errorCode = error.code;
 
-            let message = "Coś poszło nie tak.";
+            let message = "Something went wrong.";
 
             if (errorCode === "auth/wrong-password" || errorCode === "auth/user-not-found") {
-                message = "Nazwa użytkownika lub hasło były nieprawidłowe";
+                message = "The username or password was incorrect";
             }
 
             throw new Error(message);
@@ -123,4 +127,32 @@ const saveDataToStorage = (token, userId, expiryDate) => {
         userId,
         expiryDate: expiryDate.toISOString()
     }));
+}
+
+const storePushToken = async (userData) => {
+    if (!Device.isDevice) {
+        return;
+    }
+
+    const token = (await Notifications.getExpoPushTokenAsync()).data;
+
+    const tokenData = { ...userData.pushTokens } || {};
+    const tokenArray = Object.values(tokenData);
+
+    if (tokenArray.includes(token)) {
+        return;
+    }
+
+    tokenArray.push(token);
+
+    for (let i = 0; i < tokenArray.length; i++) {
+        const tok = tokenArray[i];
+        tokenData[i] = tok;
+    }
+
+    const app = getFirebaseApp();
+    const dbRef = ref(getDatabase(app));
+    const userRef = child(dbRef, `users/${userData.userId}/pushTokens`);
+
+    await set(userRef, tokenData);
 }

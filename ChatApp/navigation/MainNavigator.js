@@ -119,6 +119,7 @@ const MainNavigator = (props) => {
     const storedUsers = useSelector(state => state.users.storedUsers);
 
     const [expoPushToken, setExpoPushToken] = useState('');
+    // console.log(expoPushToken)
     const notificationListener = useRef();
     const responseListener = useRef();
 
