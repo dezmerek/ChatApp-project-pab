@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import ChatSettingsScreen from "../screens/ChatSettingsScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import AboutUs from "../screens/AboutUs";
 import ChatListScreen from "../screens/ChatListScreen";
 import ChatScreen from "../screens/ChatScreen";
 import NewChatScreen from "../screens/NewChatScreen";
@@ -54,7 +55,7 @@ const TabNavigator = () => {
             />
              <Tab.Screen
                 name="About us"
-                component={SettingsScreen}
+                component={AboutUs}
                 options={{
                     tabBarLabel: "O nas",
                     tabBarIcon: ({ color, size }) => (
