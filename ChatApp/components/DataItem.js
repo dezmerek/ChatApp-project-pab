@@ -10,12 +10,14 @@ const DataItem = props => {
 
     const { title, subTitle, image, type, isChecked, icon } = props;
 
+    const hideImage = props.hideImage && props.hideImage === true;
+
     return (
         <TouchableWithoutFeedback onPress={props.onPress}>
             <View style={styles.container}>
 
                 {
-                    !icon &&
+                    !icon && !hideImage &&
                     <ProfileImage
                         uri={image}
                         size={imageSize}
@@ -25,7 +27,7 @@ const DataItem = props => {
                 {
                     icon &&
                     <View style={styles.leftIconContainer}>
-                        <AntDesign name={icon} size={20} color={colors.primary} />
+                        <AntDesign name={icon} size={20} color={colors.blue} />
                     </View>
                 }
 
