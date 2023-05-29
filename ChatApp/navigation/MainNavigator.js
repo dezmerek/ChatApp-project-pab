@@ -10,7 +10,7 @@ import NewChatScreen from "../screens/NewChatScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useSelector } from "react-redux";
 import { getFirebaseApp } from "../utils/firebaseHelper";
-import { child, getDatabase, onValue, ref } from "firebase/database";
+import { child, getDatabase, off, onValue, ref } from "firebase/database";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -93,6 +93,7 @@ const MainNavigator = (props) => {
         const app = getFirebaseApp();
         const dbRef = ref(getDatabase(app));
         const userChatsRef = child(dbRef, `userChats/${userData.userId}`);
+        const refs = [userChatsRef];
 
         onValue(userChatsRef, (querySnapshot) => {
             const chatIdsData = querySnapshot.val() || {};
@@ -100,6 +101,11 @@ const MainNavigator = (props) => {
 
             console.log(chatIds);
         })
+
+        return () => {
+            console.log("Unsubscribing firebase listeners");
+            refs.forEach(ref => off(ref));
+        }
     }, []);
 
 
