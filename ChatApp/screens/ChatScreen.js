@@ -10,7 +10,8 @@ import {
     KeyboardAvoidingView,
     Platform,
     FlatList,
-    Image
+    Image,
+    ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
@@ -22,7 +23,7 @@ import PageContainer from "../components/PageContainer";
 import Bubble from "../components/Bubble";
 import { createChat, sendTextMessage } from "../utils/actions/chatActions";
 import ReplyTo from "../components/ReplyTo";
-import { launchImagePicker } from "../utils/imagePickerHelper";
+import { launchImagePicker, uploadImageAsync } from "../utils/imagePickerHelper";
 import AwesomeAlert from 'react-native-awesome-alerts';
 
 const ChatScreen = (props) => {
@@ -32,6 +33,7 @@ const ChatScreen = (props) => {
     const [errorBannerText, setErrorBannerText] = useState("");
     const [replyingTo, setReplyingTo] = useState();
     const [tempImageUri, setTempImageUri] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const userData = useSelector(state => state.auth.userData);
     const storedUsers = useSelector(state => state.users.storedUsers);
@@ -103,7 +105,23 @@ const ChatScreen = (props) => {
         } catch (error) {
             console.log(error);
         }
-    }, [tempImageUri])
+    }, [tempImageUri]);
+
+    const uploadImage = useCallback(async () => {
+        setIsLoading(true);
+
+        try {
+            const uploadUrl = await uploadImageAsync(tempImageUri, true);
+            setIsLoading(false);
+
+            // Send Image
+
+            setTempImageUri("");
+        } catch (error) {
+            console.log(error);
+
+        }
+    }, [isLoading, tempImageUri])
 
     return (
         <SafeAreaView edges={["right", "left", "bottom"]} style={styles.container}>
@@ -200,25 +218,33 @@ const ChatScreen = (props) => {
 
                     <AwesomeAlert
                         show={tempImageUri !== ""}
-                        title='Wysłać obraz?'
-                        closenOnTouchside={true}
+                        title='Send image?'
+                        closeOnTouchOutside={true}
                         closeOnHardwareBackPress={false}
                         showCancelButton={true}
                         showConfirmButton={true}
-                        cancelText="Analuj"
-                        confirmText="Wyślij obraz"
+                        cancelText='Cancel'
+                        confirmText="Send image"
                         confirmButtonColor={colors.primary}
                         cancelButtonColor={colors.red}
                         titleStyle={styles.popupTitleStyle}
                         onCancelPressed={() => setTempImageUri("")}
-                        onConfirmPressed={() => console.log("upload!")}
+                        onConfirmPressed={uploadImage}
                         onDismiss={() => setTempImageUri("")}
                         customView={(
                             <View>
-                                <Image source={{ uri: tempImageUri }} style={{ width: 200, height: 200 }} />
+                                {
+                                    isLoading &&
+                                    <ActivityIndicator size='small' color={colors.primary} />
+                                }
+                                {
+                                    !isLoading && tempImageUri !== "" &&
+                                    <Image source={{ uri: tempImageUri }} style={{ width: 200, height: 200 }} />
+                                }
                             </View>
                         )}
                     />
+
 
                 </View>
             </KeyboardAvoidingView>

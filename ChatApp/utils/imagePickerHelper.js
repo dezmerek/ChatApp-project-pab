@@ -14,12 +14,12 @@ export const launchImagePicker = async () => {
         quality: 1
     });
 
-    if (!result.canceled) {
-        return result.assets[0].uri;
+    if (!result.cancelled) {
+        return result.uri;
     }
 }
 
-export const uploadImageAsync = async (uri) => {
+export const uploadImageAsync = async (uri, isChatImage = false) => {
     const app = getFirebaseApp();
 
     const blob = await new Promise((resolve, reject) => {
@@ -38,7 +38,7 @@ export const uploadImageAsync = async (uri) => {
         xhr.send();
     });
 
-    const pathFolder = 'profilePics';
+    const pathFolder = isChatImage ? 'chatImages' : 'profilePics';
     const storageRef = ref(getStorage(app), `${pathFolder}/${uuid.v4()}`);
 
     await uploadBytesResumable(storageRef, blob);
