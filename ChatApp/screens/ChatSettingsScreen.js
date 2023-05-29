@@ -21,6 +21,7 @@ const ChatSettingsScreen = props => {
     const chatData = useSelector(state => state.chats.chatsData[chatId] || {});
     const userData = useSelector(state => state.auth.userData);
     const storedUsers = useSelector(state => state.users.storedUsers);
+    const starredMessages = useSelector(state => state.messages.starredMessages[chatId] ?? {});
 
     const initialState = {
         inputValues: { chatName: chatData.chatName },
@@ -108,7 +109,7 @@ const ChatSettingsScreen = props => {
                 size={80}
                 chatId={chatId}
                 userId={userData.userId}
-                uri={chatData.profileImageUri}
+                uri={chatData.chatImage}
             />
 
             <Input
@@ -171,6 +172,13 @@ const ChatSettingsScreen = props => {
                         disabled={!formState.formIsValid}
                     />
             }
+
+            <DataItem
+                type={"link"}
+                title="Starred messages"
+                hideImage={true}
+                onPress={() => props.navigation.navigate("DataList", { title: "Starred messages", data: Object.values(starredMessages), type: "messages" })}
+            />
 
         </ScrollView>
 
