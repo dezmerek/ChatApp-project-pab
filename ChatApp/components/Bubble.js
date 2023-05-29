@@ -33,6 +33,7 @@ const Bubble = props => {
     const id = useRef(uuid.v4());
 
     let Container = View;
+    let isUserMessage = false;
 
     switch (type) {
         case "system":
@@ -51,11 +52,13 @@ const Bubble = props => {
             bubbleStyle.backgroundColor = '#E7FED6';
             bubbleStyle.maxWidth = '90%';
             Container = TouchableWithoutFeedback;
+            isUserMessage = true;
             break;
         case "theirMessage":
             wrapperStyle.justifyContent = 'flex-start';
             bubbleStyle.maxWidth = '90%';
             Container = TouchableWithoutFeedback;
+            isUserMessage = true;
             break;
 
         default:
@@ -70,6 +73,8 @@ const Bubble = props => {
         }
     }
 
+    const isStarred = isUserMessage && starredMessages[messageId] !== undefined;
+
     return (
         <View style={wrapperStyle}>
             <Container onLongPress={() => menuRef.current.props.ctx.menuActions.openMenu(id.current)} style={{ width: '100%' }}>
@@ -77,6 +82,10 @@ const Bubble = props => {
                     <Text style={textStyle}>
                         {text}
                     </Text>
+
+                    <View style={styles.timeContainer}>
+                        {isStarred && <FontAwesome name='star' size={14} color={text.textColor} />}
+                    </View>
 
                     <Menu name={id.current} ref={menuRef}>
                         <MenuTrigger />
@@ -121,6 +130,10 @@ const styles = StyleSheet.create({
         fontFamily: 'regular',
         letterSpacing: 0.3,
         fontSize: 16
+    },
+    timeContainer: {
+        flexDirection: 'row',
+        justifyContent: 'flex-row'
     }
 })
 
