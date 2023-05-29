@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native"
 
 const PageContainer = props => {
-    return <View style={{ ...styles.container, ...props.style }}>
+    return <View style={{ ...styles.container, ...props.style }} testID="pageContainer">
         {props.children}
     </View>
 };
