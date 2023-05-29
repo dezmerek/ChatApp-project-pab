@@ -7,6 +7,7 @@ import PageContainer from '../components/PageContainer';
 const DataListScreen = props => {
 
     const storedUsers = useSelector(state => state.users.storedUsers);
+    const userData = useSelector(state => state.auth.userData);
 
     const { title, data, type, chatId } = props.route.params;
 
@@ -27,11 +28,14 @@ const DataListScreen = props => {
 
                     if (!currentUser) return;
 
+                    const isLoggedInUser = uid === userData.userId;
+
                     key = uid;
                     image = currentUser.profilePicture;
                     title = `${currentUser.firstName} ${currentUser.lastName}`;
                     subTitle = currentUser.about;
-                    itemType = "link";
+                    itemType = isLoggedInUser ? undefined : "link";
+                    onPress = isLoggedInUser ? undefined : () => props.navigation.navigate("Contact", { uid, chatId })
                 }
 
                 return <DataItem
