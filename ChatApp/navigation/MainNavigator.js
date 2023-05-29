@@ -52,6 +52,16 @@ const TabNavigator = () => {
                     ),
                 }}
             />
+             <Tab.Screen
+                name="About us"
+                component={SettingsScreen}
+                options={{
+                    tabBarLabel: "O nas",
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons  name="information-circle-outline"  size={size} color={color} />
+                    ),
+                }}
+            />
         </Tab.Navigator>
     );
 };
