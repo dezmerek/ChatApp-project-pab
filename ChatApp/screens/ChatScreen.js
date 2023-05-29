@@ -277,7 +277,7 @@ const ChatScreen = (props) => {
                     closeOnHardwareBackPress={false}
                     showCancelButton={true}
                     showConfirmButton={true}
-                    cancelText='Analuj'
+                    cancelText='Anuluj'
                     confirmText="Wyślij"
                     confirmButtonColor={colors.primary}
                     cancelButtonColor={colors.red}
