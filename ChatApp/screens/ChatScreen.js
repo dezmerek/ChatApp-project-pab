@@ -137,7 +137,10 @@ const ChatScreen = (props) => {
 
                     {
                         replyingTo &&
-                        <Text>Replying to</Text>
+                        <Text text={
+                            replyingTo.text}
+                            user={storedUsers[replyingTo.sentBy]}
+                        />
                     }
 
                 </ImageBackground>
