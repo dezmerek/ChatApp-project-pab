@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFirebaseApp } from "../utils/firebaseHelper";
 import { child, get, getDatabase, off, onValue, ref } from "firebase/database";
 import { setChatsData } from "../store/chatSlice";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, KeyboardAvoidingView, Platform, View } from "react-native";
 import colors from "../constants/colors";
 import commonStyles from "../constants/commonStyles";
 import { setStoredUsers } from "../store/userSlice";
@@ -31,7 +31,7 @@ const TabNavigator = () => {
                 name="ChatList"
                 component={ChatListScreen}
                 options={{
-                    tabBarLabel: "Czaty",
+                    tabBarLabel: "Chats",
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="chatbubble-outline" size={size} color={color} />
                     ),
@@ -41,7 +41,7 @@ const TabNavigator = () => {
                 name="Settings"
                 component={SettingsScreen}
                 options={{
-                    tabBarLabel: "Ustawienia",
+                    tabBarLabel: "Settings",
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="settings-outline" size={size} color={color} />
                     ),
@@ -65,15 +65,15 @@ const StackNavigator = () => {
                     component={ChatScreen}
                     options={{
                         headerTitle: "",
-                        headerBackTitle: "Wróć",
+                        headerBackTitle: "Back",
                     }}
                 />
                 <Stack.Screen
                     name="ChatSettings"
                     component={ChatSettingsScreen}
                     options={{
-                        headerTitle: "Ustawienia",
-                        headerBackTitle: "Wróć",
+                        headerTitle: "Settings",
+                        headerBackTitle: "Back",
                     }}
                 />
             </Stack.Group>
@@ -184,7 +184,11 @@ const MainNavigator = (props) => {
 
 
     return (
-        <StackNavigator />
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === "ios" ? "padding" : undefined}>
+            <StackNavigator />
+        </KeyboardAvoidingView>
     );
 };
 
