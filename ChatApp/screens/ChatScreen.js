@@ -9,6 +9,7 @@ import {
     TouchableOpacity,
     KeyboardAvoidingView,
     Platform,
+    FlatList,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
@@ -103,6 +104,26 @@ const ChatScreen = (props) => {
 
                         {
                             errorBannerText !== "" && <Bubble text={errorBannerText} type="error" />
+                        }
+
+                        {
+                            chatId &&
+                            <FlatList
+                                data={chatMessages}
+                                renderItem={(itemData) => {
+                                    const message = itemData.item;
+
+                                    const isOwnMessage = message.sentBy === userData.userId;
+
+                                    const messageType = isOwnMessage ? "myMessage" : "theirMessage";
+
+
+                                    return <Bubble
+                                        type={messageType}
+                                        text={message.text}
+                                    />
+                                }}
+                            />
                         }
 
 
