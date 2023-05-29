@@ -24,6 +24,11 @@ const Bubble = props => {
         case "myMessage":
             wrapperStyle.justifyContent = 'flex-end';
             bubbleStyle.backgroundColor = '#E7FED6';
+            bubbleStyle.maxWidth = '90%';
+            break;
+        case "theirMessage":
+            wrapperStyle.justifyContent = 'flex-start';
+            bubbleStyle.maxWidth = '90%';
             break;
 
         default:
