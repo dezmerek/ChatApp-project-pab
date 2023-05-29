@@ -4,6 +4,19 @@ import colors from '../constants/colors';
 import { Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
 import uuid from 'react-native-uuid';
 import * as Clipboard from 'expo-clipboard';
+import { Feather, FontAwesome } from '@expo/vector-icons';
+
+const MenuItem = props => {
+
+    const Icon = props.iconPack ?? Feather;
+
+    return <MenuOption onSelect={props.onSelect}>
+        <View style={styles.menuItemContainer}>
+            <Text style={styles.menuText}>{props.text}</Text>
+            <Icon name={props.icon} size={18} />
+        </View>
+    </MenuOption>
+}
 
 const Bubble = props => {
     const { text, type } = props;
@@ -65,9 +78,9 @@ const Bubble = props => {
                         <MenuTrigger />
 
                         <MenuOptions>
-                            <MenuOption text='Copy to clipboard' onSelect={() => copyToClipboard(text)} />
-                            <MenuOption text='Option 2' />
-                            <MenuOption text='Option 3' />
+                            <MenuItem text='Skopiuj do schowka' icon={'copy'} onSelect={() => copyToClipboard(text)} />
+                            <MenuItem text='Oznacz wiadomość' icon={'star-o'} iconPack={FontAwesome} onSelect={() => copyToClipboard(text)} />
+
                         </MenuOptions>
                     </Menu>
 
@@ -94,6 +107,16 @@ const styles = StyleSheet.create({
     text: {
         fontFamily: 'regular',
         letterSpacing: 0.3
+    },
+    menuItemContainer: {
+        flexDirection: 'row',
+        padding: 5
+    },
+    menuText: {
+        flex: 1,
+        fontFamily: 'regular',
+        letterSpacing: 0.3,
+        fontSize: 16
     }
 })
 
