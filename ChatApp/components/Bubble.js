@@ -32,7 +32,7 @@ const MenuItem = props => {
 }
 
 const Bubble = props => {
-    const { text, type, messageId, chatId, userId, date, setReply, replyingTo } = props;
+    const { text, type, messageId, chatId, userId, date, setReply, replyingTo, name } = props;
 
     const starredMessages = useSelector(state => state.messages.starredMessages[chatId] ?? {});
     const storedUsers = useSelector(state => state.users.storedUsers);
@@ -46,7 +46,7 @@ const Bubble = props => {
 
     let Container = View;
     let isUserMessage = false;
-    const dateString = formatAmPm(date);
+    const dateString = date && formatAmPm(date);
 
     switch (type) {
         case "system":
@@ -73,7 +73,9 @@ const Bubble = props => {
             Container = TouchableWithoutFeedback;
             isUserMessage = true;
             break;
-
+        case "reply":
+            bubbleStyle.backgroundColor = '#F2F2F2';
+            break;
         default:
             break;
     }
@@ -93,6 +95,11 @@ const Bubble = props => {
         <View style={wrapperStyle}>
             <Container onLongPress={() => menuRef.current.props.ctx.menuActions.openMenu(id.current)} style={{ width: '100%' }}>
                 <View style={bubbleStyle}>
+
+                    {
+                        name &&
+                        <Text style={styles.name}>{name}</Text>
+                    }
 
                     {
                         replyingToUser &&
@@ -168,6 +175,10 @@ const styles = StyleSheet.create({
         letterSpacing: 0.3,
         color: colors.grey,
         fontSize: 12
+    },
+    name: {
+        fontFamily: 'medium',
+        letterSpacing: 0.3
     }
 })
 
