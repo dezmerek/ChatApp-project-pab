@@ -132,7 +132,7 @@ export const removeUserFromChat = async (userLoggedInData, userToRemoveData, cha
     await sendInfoMessage(chatData.key, userLoggedInData.userId, messageText);
 }
 
-export const addUsersToChat = (userLoggedInData, usersToAddData, chatData) => {
+export const addUsersToChat = async (userLoggedInData, usersToAddData, chatData) => {
     const existingUsers = Object.values(chatData.users);
     const newUsers = [];
 
@@ -142,8 +142,14 @@ export const addUsersToChat = (userLoggedInData, usersToAddData, chatData) => {
         if (existingUsers.includes(userToAddId)) return;
 
         newUsers.push(userToAddId);
-        console.log(chatData.key)
+
         addUserChat(userToAddId, chatData.key);
     });
+
+    if (newUsers.length === 0) {
+        return;
+    }
+
+    await updateChatData(chatData.key, userLoggedInData.userId, { users: existingUsers.concat(newUsers) })
 
 }
