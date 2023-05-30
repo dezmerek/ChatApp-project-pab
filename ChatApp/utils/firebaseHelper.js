@@ -1,11 +1,6 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 
 export const getFirebaseApp = () => {
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    // Your web app's Firebase configuration
     const firebaseConfig = {
         apiKey: "AIzaSyDqH7N-SJEubNocS8G_Wx1iEubcg0yNrto",
         authDomain: "chatapp-4255d.firebaseapp.com",
