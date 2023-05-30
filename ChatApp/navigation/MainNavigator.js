@@ -53,13 +53,13 @@ const TabNavigator = () => {
                     ),
                 }}
             />
-             <Tab.Screen
+            <Tab.Screen
                 name="About us"
                 component={AboutUs}
                 options={{
                     tabBarLabel: "O nas",
                     tabBarIcon: ({ color, size }) => (
-                        <Ionicons  name="information-circle-outline"  size={size} color={color} />
+                        <Ionicons name="information-circle-outline" size={size} color={color} />
                     ),
                 }}
             />

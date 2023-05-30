@@ -14,7 +14,7 @@ const Input = props => {
     }
 
     return <View style={styles.container}>
-        <Text style={styles.label}z>{props.label}</Text>
+        <Text style={styles.label}>{props.label}</Text>
 
         <View style={styles.inputContainer}>
             {

@@ -72,8 +72,7 @@ const SignUpForm = props => {
                 iconPack={FontAwesome}
                 onInputChanged={inputChangedHandler}
                 autoCapitalize="none"
-                errorText={formState.inputValidities["firstName"]} 
-                />
+                errorText={formState.inputValidities["firstName"]} />
 
             <Input
                 id="lastName"
@@ -82,8 +81,7 @@ const SignUpForm = props => {
                 iconPack={FontAwesome}
                 onInputChanged={inputChangedHandler}
                 autoCapitalize="none"
-                errorText={formState.inputValidities["lastName"]} 
-                />
+                errorText={formState.inputValidities["lastName"]} />
 
             <Input
                 id="email"
@@ -93,8 +91,7 @@ const SignUpForm = props => {
                 onInputChanged={inputChangedHandler}
                 keyboardType="email-address"
                 autoCapitalize="none"
-                errorText={formState.inputValidities["email"]} 
-                />
+                errorText={formState.inputValidities["email"]} />
 
             <Input
                 id="password"
@@ -104,8 +101,7 @@ const SignUpForm = props => {
                 secureTextEntry
                 iconPack={Feather}
                 onInputChanged={inputChangedHandler}
-                errorText={formState.inputValidities["password"]} 
-                />
+                errorText={formState.inputValidities["password"]} />
 
             {
                 isLoading ?

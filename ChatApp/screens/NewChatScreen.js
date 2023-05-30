@@ -122,7 +122,6 @@ const NewChatScreen = props => {
                         style={styles.textbox}
                         placeholder="Wpisz nazwę czatu"
                         autoCorrect={false}
-                        autoCompleteType={false}
                         onChangeText={text => setChatName(text)}
                     />
                 </View>
@@ -145,7 +144,6 @@ const NewChatScreen = props => {
                             selectedUsersFlatList.current.scrollToEnd();
                         }
                     }}
-
                     renderItem={itemData => {
                         const userId = itemData.item;
                         const userData = storedUsers[userId];
@@ -199,6 +197,7 @@ const NewChatScreen = props => {
                         type={isGroupChat ? "checkbox" : ""}
                         isChecked={selectedUsers.includes(userId)}
                     />
+
                 }}
             />
         }

@@ -14,7 +14,7 @@ const ReplyTo = props => {
             <Text numberOfLines={1}>{text}</Text>
         </View>
 
-        <TouchableOpacity onPress={onCancel}  testID="cancel-button">
+        <TouchableOpacity onPress={onCancel} testID="cancel-button">
             <AntDesign name="closecircleo" size={24} color={colors.blue} />
         </TouchableOpacity>
 
