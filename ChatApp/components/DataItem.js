@@ -34,9 +34,9 @@ const DataItem = props => {
 
                 <View style={styles.textContainer}>
 
-                    <Text>
+                    <Text
                         numberOfLines={1}
-                        style={{ ...styles.title, ...{ color: type === "button" ? colors.blue : colors.textColor } }}
+                        style={{ ...styles.title, ...{ color: type === "button" ? colors.blue : colors.textColor } }}>
                         {title}
                     </Text>
 
